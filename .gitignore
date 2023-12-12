@@ -1,0 +1,30 @@
+# Ignore output files and directories
+/results/
+/output/
+
+# Ignore Python-related files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Robot Framework logs and reports
+/log.html
+/report.html
+
+# Ignore virtual environment
+.venv/
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore any backup or temporary files
+*~
+*.swp
+*.bak
