@@ -1,15 +1,16 @@
 *** Settings ***
 Resource            ../../resources/pages/employeesPage.resource
-Resource            ../../resources/keywords/common.resource
+Resource            ../../resources/keywords/common_test_steps.resource
 Resource            ../../resources/pages/loginPage.resource
 
-Test Setup          Open Login page
-Test Teardown       Close Browser
+Test Setup          Test case Setup
+Test Teardown       Test case Teardown
 
 
 *** Test Cases ***
-Verify that user can access Employee page
-    Log    Test Case Name: ${TEST_NAME}
+GH-T125 - Verify that user can access Employee page
+    [Documentation]    This is some basic info about test
+    [Tags]    smoke
     Login system with admin user account
     Access Employees page
     Employees page should be opened
@@ -54,18 +55,18 @@ Debug test case
     # Click on sort icon of column name "Position"
     # Click on sort icon of column name "Department"
 
-GH-T30-Example Test
-    ${test_case_name}=    Get Test Case Name
-    ${test_case_id}=    Get Test Case ID    ${test_case_name}
-    Log    Test Case ID: ${test_case_id}
-    # Add other actions or verifications as needed
-
 
 *** Keywords ***
-Get Test Case Name
-    RETURN    ${TEST NAME}
+Suite Setup
+    # // code here...
+    Log    Suite Setup
 
-Get Test Case ID
-    [Arguments]    ${test_case_name}
-    ${id_parts}=    Split String    ${test_case_name}    -
-    RETURN    ${id_parts}[0]
+Suite Teardown
+    # // code here...
+    Log    Suite Teardown
+
+Test case Setup
+    Open Login page
+
+Test case Teardown
+    Close Browser

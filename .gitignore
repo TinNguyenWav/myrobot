@@ -28,3 +28,6 @@ __pycache__/
 *~
 *.swp
 *.bak
+
+# ignore cridential file
+/configurations/api_credentials.resource

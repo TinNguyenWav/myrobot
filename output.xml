@@ -1,49 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231212 18:26:14.952" rpa="false" schemaversion="4">
+<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231213 18:21:22.486" rpa="false" schemaversion="4">
 <suite id="s1" name="Test" source="d:\Projects\Research\myrobot\tests\test_cases\test.robot">
-<test id="s1-t1" name="Example Get API Call" line="6">
-<kw name="Create Session" library="RequestsLibrary">
-<arg>mysession</arg>
-<arg>https://61de6362ab592500178c714e.mockapi.io</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<msg timestamp="20231212 18:26:15.069" level="INFO">Creating Session using : alias=mysession, url=https://61de6362ab592500178c714e.mockapi.io, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<status status="PASS" starttime="20231212 18:26:15.068" endtime="20231212 18:26:15.071"/>
-</kw>
-<kw name="GET On Session" library="RequestsLibrary">
-<var>${response}</var>
-<arg>mysession</arg>
-<arg>/user</arg>
-<doc>Sends a GET request on a previously created HTTP Session.</doc>
-<msg timestamp="20231212 18:26:16.834" level="INFO">GET Request : url=https://61de6362ab592500178c714e.mockapi.io/user 
- path_url=/user 
- headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
- body=None 
- </msg>
-<msg timestamp="20231212 18:26:16.835" level="INFO">GET Response : url=https://61de6362ab592500178c714e.mockapi.io/user 
- status=200, reason=OK 
- headers={'Server': 'Cowboy', 'Report-To': '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1702380376&amp;sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&amp;s=q9mK%2Bynxq3rz4pXUJ7ncd2nUEsqSTrzBypgSXQvxVf0%3D"}]}', 'Reporting-Endpoints': 'heroku-nel=https://nel.heroku.com/reports?ts=1702380376&amp;sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&amp;s=q9mK%2Bynxq3rz4pXUJ7ncd2nUEsqSTrzBypgSXQvxVf0%3D', 'Nel': '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS', 'Access-Control-Allow-Headers': 'X-Requested-With,Content-Type,Cache-Control,access_token', 'Content-Type': 'application/json', 'Etag': '"819737213"', 'Vary': 'Accept-Encoding', 'Content-Encoding': 'deflate', 'Date': 'Tue, 12 Dec 2023 11:26:16 GMT', 'Transfer-Encoding': 'chunked', 'Via': '1.1 vegur'} 
- body=[{"name":"Tiffany Kilback","address":"23617 Kassulke Isle","id":"1"},{"name":"Miss Milton Jacobson","address":"713 Marks Manor","id":"2"},{"name":"Desiree Smitham","address":"549 Bode Summit","id":"3"},{"name":"Evan Gorczany","address":"974 Milo Forges","id":"4"},{"name":"Genevieve Legros","address":"557 Auer Cove","id":"5"},{"name":"Kent Hahn","address":"0125 Felicita Corner","id":"6"},{"name":"Hope McKenzie","address":"6601 Tressa Light","id":"7"},{"name":"Marie Dooley","address":"258 Bruen Crossroad","id":"8"},{"name":"Christy Dare","address":"990 Libbie Tunnel","id":"9"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle","id":"10"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle","id":"11"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle","id":"12"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle","id":"13"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle 12312","id":"14"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle 12312","id":"15"},{"name":"Tiffany Kilback","address":67,"id":"16"},{"name":"Tiffany Kilback","address":289,"id":"17"},{"name":"Tiffany Kilback","address":101,"id":"18"},{"name":"Tiffany Kilback 314","address":424,"id":"19"},{"name":"Tiffany Kilback 992","address":854,"id":"20"},{"name":"Tiffany Kilback 638","address":857,"id":"21"},{"name":"Tiffany Kilback 57","address":198,"id":"22"},{"name":"Tin Nguyen 537","address":471,"id":"23"},{"name":"Bennie Yost PhD","address":"023 Abernathy Mills","id":"24","query":"\n    query IntrospectionQuery {\n      __schema {\n        queryType { name }\n        mutationType { name }\n        subscriptionType { name }\n        types {\n          ...FullType\n        }\n        directives {\n          name\n          description\n          locations\n          args {\n            ...InputValue\n          }\n        }\n      }\n    }\n\n    fragment FullType on __Type {\n      kind\n      name\n      description\n      fields(includeDeprecated: true) {\n        name\n        description\n        args {\n          ...InputValue\n        }\n        type {\n          ...TypeRef\n        }\n        isDeprecated\n        deprecationReason\n      }\n      inputFields {\n        ...InputValue\n      }\n      interfaces {\n        ...TypeRef\n      }\n      enumValues(includeDeprecated: true) {\n        name\n        description\n        isDeprecated\n        deprecationReason\n      }\n      possibleTypes {\n        ...TypeRef\n      }\n    }\n\n    fragment InputValue on __InputValue {\n      name\n      description\n      type { ...TypeRef }\n      defaultValue\n    }\n\n    fragment TypeRef on __Type {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                  ofType {\n                    kind\n                    name\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  "},{"name":"Jody Fisher","address":"22870 Dana Gateway","id":"25","query":"\n    query IntrospectionQuery {\n      __schema {\n        queryType { name }\n        mutationType { name }\n        subscriptionType { name }\n        types {\n          ...FullType\n        }\n        directives {\n          name\n          description\n          locations\n          args {\n            ...InputValue\n          }\n        }\n      }\n    }\n\n    fragment FullType on __Type {\n      kind\n      name\n      description\n      fields(includeDeprecated: true) {\n        name\n        description\n        args {\n          ...InputValue\n        }\n        type {\n          ...TypeRef\n        }\n        isDeprecated\n        deprecationReason\n      }\n      inputFields {\n        ...InputValue\n      }\n      interfaces {\n        ...TypeRef\n      }\n      enumValues(includeDeprecated: true) {\n        name\n        description\n        isDeprecated\n        deprecationReason\n      }\n      possibleTypes {\n        ...TypeRef\n      }\n    }\n\n    fragment InputValue on __InputValue {\n      name\n      description\n      type { ...TypeRef }\n      defaultValue\n    }\n\n    fragment TypeRef on __Type {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                  ofType {\n                    kind\n                    name\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  "}] 
- </msg>
-<msg timestamp="20231212 18:26:16.836" level="INFO">d:\Projects\Research\myrobot\.venv\Lib\site-packages\urllib3\connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host '61de6362ab592500178c714e.mockapi.io'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(</msg>
-<msg timestamp="20231212 18:26:16.841" level="INFO">${response} = &lt;Response [200]&gt;</msg>
-<status status="PASS" starttime="20231212 18:26:15.071" endtime="20231212 18:26:16.842"/>
-</kw>
+<test id="s1-t1" name="&lt;GH-001&gt; --- Test something" line="23">
 <kw name="Log" library="BuiltIn">
-<arg>${response.status_code}</arg>
+<arg>hello</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20231212 18:26:16.846" level="INFO">200</msg>
-<status status="PASS" starttime="20231212 18:26:16.844" endtime="20231212 18:26:16.847"/>
+<msg timestamp="20231213 18:21:23.033" level="INFO">hello</msg>
+<status status="PASS" starttime="20231213 18:21:23.031" endtime="20231213 18:21:23.039"/>
 </kw>
-<kw name="Log" library="BuiltIn">
-<arg>${response.content}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20231212 18:26:16.850" level="INFO">[{"name":"Tiffany Kilback","address":"23617 Kassulke Isle","id":"1"},{"name":"Miss Milton Jacobson","address":"713 Marks Manor","id":"2"},{"name":"Desiree Smitham","address":"549 Bode Summit","id":"3"},{"name":"Evan Gorczany","address":"974 Milo Forges","id":"4"},{"name":"Genevieve Legros","address":"557 Auer Cove","id":"5"},{"name":"Kent Hahn","address":"0125 Felicita Corner","id":"6"},{"name":"Hope McKenzie","address":"6601 Tressa Light","id":"7"},{"name":"Marie Dooley","address":"258 Bruen Crossroad","id":"8"},{"name":"Christy Dare","address":"990 Libbie Tunnel","id":"9"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle","id":"10"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle","id":"11"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle","id":"12"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle","id":"13"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle 12312","id":"14"},{"name":"Tiffany Kilback","address":"23617 Kassulke Isle 12312","id":"15"},{"name":"Tiffany Kilback","address":67,"id":"16"},{"name":"Tiffany Kilback","address":289,"id":"17"},{"name":"Tiffany Kilback","address":101,"id":"18"},{"name":"Tiffany Kilback 314","address":424,"id":"19"},{"name":"Tiffany Kilback 992","address":854,"id":"20"},{"name":"Tiffany Kilback 638","address":857,"id":"21"},{"name":"Tiffany Kilback 57","address":198,"id":"22"},{"name":"Tin Nguyen 537","address":471,"id":"23"},{"name":"Bennie Yost PhD","address":"023 Abernathy Mills","id":"24","query":"\n    query IntrospectionQuery {\n      __schema {\n        queryType { name }\n        mutationType { name }\n        subscriptionType { name }\n        types {\n          ...FullType\n        }\n        directives {\n          name\n          description\n          locations\n          args {\n            ...InputValue\n          }\n        }\n      }\n    }\n\n    fragment FullType on __Type {\n      kind\n      name\n      description\n      fields(includeDeprecated: true) {\n        name\n        description\n        args {\n          ...InputValue\n        }\n        type {\n          ...TypeRef\n        }\n        isDeprecated\n        deprecationReason\n      }\n      inputFields {\n        ...InputValue\n      }\n      interfaces {\n        ...TypeRef\n      }\n      enumValues(includeDeprecated: true) {\n        name\n        description\n        isDeprecated\n        deprecationReason\n      }\n      possibleTypes {\n        ...TypeRef\n      }\n    }\n\n    fragment InputValue on __InputValue {\n      name\n      description\n      type { ...TypeRef }\n      defaultValue\n    }\n\n    fragment TypeRef on __Type {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                  ofType {\n                    kind\n                    name\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  "},{"name":"Jody Fisher","address":"22870 Dana Gateway","id":"25","query":"\n    query IntrospectionQuery {\n      __schema {\n        queryType { name }\n        mutationType { name }\n        subscriptionType { name }\n        types {\n          ...FullType\n        }\n        directives {\n          name\n          description\n          locations\n          args {\n            ...InputValue\n          }\n        }\n      }\n    }\n\n    fragment FullType on __Type {\n      kind\n      name\n      description\n      fields(includeDeprecated: true) {\n        name\n        description\n        args {\n          ...InputValue\n        }\n        type {\n          ...TypeRef\n        }\n        isDeprecated\n        deprecationReason\n      }\n      inputFields {\n        ...InputValue\n      }\n      interfaces {\n        ...TypeRef\n      }\n      enumValues(includeDeprecated: true) {\n        name\n        description\n        isDeprecated\n        deprecationReason\n      }\n      possibleTypes {\n        ...TypeRef\n      }\n    }\n\n    fragment InputValue on __InputValue {\n      name\n      description\n      type { ...TypeRef }\n      defaultValue\n    }\n\n    fragment TypeRef on __Type {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                  ofType {\n                    kind\n                    name\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  "}]</msg>
-<status status="PASS" starttime="20231212 18:26:16.848" endtime="20231212 18:26:16.850"/>
+<kw name="Post action test" type="TEARDOWN">
+<kw name="Get Test Case ID" library="utils">
+<kw name="Get Test Case Name" library="utils">
+<var>${test_case_name}</var>
+<return>
+<value>${TEST NAME}</value>
+<status status="PASS" starttime="20231213 18:21:25.490" endtime="20231213 18:21:25.491"/>
+</return>
+<msg timestamp="20231213 18:21:25.493" level="INFO">${test_case_name} = &lt;GH-001&gt; --- Test something</msg>
+<status status="PASS" starttime="20231213 18:21:24.712" endtime="20231213 18:21:25.494"/>
 </kw>
-<status status="PASS" starttime="20231212 18:26:15.067" endtime="20231212 18:26:16.851"/>
+<kw name="Split String" library="String">
+<var>${tc_parts}</var>
+<arg>${test_case_name}</arg>
+<arg>---</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<msg timestamp="20231213 18:21:25.779" level="INFO">${tc_parts} = ['&lt;GH-001&gt; ', ' Test something']</msg>
+<status status="PASS" starttime="20231213 18:21:25.494" endtime="20231213 18:21:25.780"/>
+</kw>
+<kw name="Replace String" library="String">
+<var>${first_part}</var>
+<arg>${tc_parts}[0]</arg>
+<arg>&lt;</arg>
+<arg>${EMPTY}</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<msg timestamp="20231213 18:21:26.023" level="INFO">${first_part} = GH-001&gt; </msg>
+<status status="PASS" starttime="20231213 18:21:25.782" endtime="20231213 18:21:26.025"/>
+</kw>
+<kw name="Replace String" library="String">
+<var>${last_part}</var>
+<arg>${first_part}</arg>
+<arg>&gt;</arg>
+<arg>${EMPTY}</arg>
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<msg timestamp="20231213 18:21:28.561" level="INFO">${last_part} = GH-001 </msg>
+<status status="PASS" starttime="20231213 18:21:26.026" endtime="20231213 18:21:28.561"/>
+</kw>
+<kw name="Strip String" library="String">
+<var>${id_part}</var>
+<arg>${last_part}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<msg timestamp="20231213 18:21:30.489" level="INFO">${id_part} = GH-001</msg>
+<status status="PASS" starttime="20231213 18:21:28.562" endtime="20231213 18:21:30.489"/>
+</kw>
+<return>
+<value>${id_part}</value>
+<status status="PASS" starttime="20231213 18:21:30.490" endtime="20231213 18:21:36.053"/>
+</return>
+<status status="PASS" starttime="20231213 18:21:23.864" endtime="20231213 18:21:36.058"/>
+</kw>
+<status status="PASS" starttime="20231213 18:21:23.042" endtime="20231213 18:21:36.060"/>
+</kw>
+<status status="PASS" starttime="20231213 18:21:23.028" endtime="20231213 18:21:36.062"/>
 </test>
-<status status="PASS" starttime="20231212 18:26:14.956" endtime="20231212 18:26:16.854"/>
+<status status="PASS" starttime="20231213 18:21:22.502" endtime="20231213 18:21:36.071"/>
 </suite>
 <statistics>
 <total>

@@ -1,5 +1,4 @@
 *** Settings ***
-Resource    ../../resources/keywords/common.resource
 Resource    ../../resources/pages/loginPage.resource
 Resource    ../../resources/pages/homePage.resource
 Resource    ../../resources/pageObjects/hearderPageObject.resource
