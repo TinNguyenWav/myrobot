@@ -20,6 +20,13 @@ Example Get API Call
 
     Status Should Be    201    ${response}
 
+Test get test case
+    # Get all test cases
+    Get test cases by ID    GH-T125
+
+Crete test Cycle
+    Create test Cycle
+
 <GH-001> --- Test something
     Log    hello
 

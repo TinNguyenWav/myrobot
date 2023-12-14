@@ -1,5 +1,6 @@
 *** Settings ***
 Library     String
+Library     DateTime
 Library     RequestsLibrary
 
 
@@ -17,3 +18,8 @@ Get Test Case ID
     ${last_part}=    Replace String    ${first_part}    >    ${EMPTY}
     ${id_part}=    Strip String    ${last_part}
     RETURN    ${id_part}
+
+Get current date time
+    ${current_time}=    Get Current Date    result_format=%Y-%m-%d %H:%M:%S
+    Log    ${current_time}
+    RETURN    ${current_time}

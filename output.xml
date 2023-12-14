@@ -1,12 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231213 18:21:22.486" rpa="false" schemaversion="4">
+<robot generator="Robot 6.1.1 (Python 3.12.0 on win32)" generated="20231214 18:47:52.041" rpa="false" schemaversion="4">
 <suite id="s1" name="Test" source="d:\Projects\Research\myrobot\tests\test_cases\test.robot">
-<test id="s1-t1" name="&lt;GH-001&gt; --- Test something" line="23">
+<test id="s1-t1" name="Crete test Cycle" line="27">
+<kw name="Create test Cycle" library="zephyr_scale_integrate">
+<kw name="Generate test cycle name" library="zephyr_scale_integrate">
+<var>${cycle_name}</var>
+<kw name="Get Suite Name" library="utils">
+<var>${current_suite_name}</var>
+<return>
+<value>${SUITE NAME}</value>
+<status status="PASS" starttime="20231214 18:47:59.283" endtime="20231214 18:47:59.285"/>
+</return>
+<msg timestamp="20231214 18:47:59.288" level="INFO">${current_suite_name} = Test</msg>
+<status status="PASS" starttime="20231214 18:47:59.281" endtime="20231214 18:47:59.294"/>
+</kw>
+<kw name="Get current date time" library="utils">
+<var>${current_date_time}</var>
+<kw name="Get Current Date" library="DateTime">
+<var>${current_time}</var>
+<arg>result_format=%Y-%m-%d %H:%M:%S</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20231214 18:48:00.264" level="INFO">${current_time} = 2023-12-14 18:48:00</msg>
+<status status="PASS" starttime="20231214 18:47:59.298" endtime="20231214 18:48:00.265"/>
+</kw>
 <kw name="Log" library="BuiltIn">
-<arg>hello</arg>
+<arg>${current_time}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20231213 18:21:23.033" level="INFO">hello</msg>
-<status status="PASS" starttime="20231213 18:21:23.031" endtime="20231213 18:21:23.039"/>
+<msg timestamp="20231214 18:48:00.688" level="INFO">2023-12-14 18:48:00</msg>
+<status status="PASS" starttime="20231214 18:48:00.266" endtime="20231214 18:48:00.689"/>
+</kw>
+<return>
+<value>${current_time}</value>
+<status status="PASS" starttime="20231214 18:48:00.690" endtime="20231214 18:48:01.350"/>
+</return>
+<msg timestamp="20231214 18:48:01.352" level="INFO">${current_date_time} = 2023-12-14 18:48:00</msg>
+<status status="PASS" starttime="20231214 18:47:59.295" endtime="20231214 18:48:01.353"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${cycle_name}</var>
+<arg>${current_suite_name} - ${current_date_time}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231214 18:48:03.655" level="INFO">${cycle_name} = Test - 2023-12-14 18:48:00</msg>
+<status status="PASS" starttime="20231214 18:48:01.354" endtime="20231214 18:48:03.656"/>
+</kw>
+<return>
+<value>${cycle_name}</value>
+<status status="PASS" starttime="20231214 18:48:03.657" endtime="20231214 18:48:04.053"/>
+</return>
+<msg timestamp="20231214 18:48:04.055" level="INFO">${cycle_name} = Test - 2023-12-14 18:48:00</msg>
+<status status="PASS" starttime="20231214 18:47:55.984" endtime="20231214 18:48:04.056"/>
+</kw>
+<kw name="Create new session" library="zephyr_scale_integrate">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=Bearer ${API_ACCESS_TOKEN}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231214 18:48:07.636" level="INFO">${headers} = {'Content-Type': 'application/json', 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb250ZXh0Ijp7ImJhc2VVcmwiOiJodHRwczovL3dhdmVybGV5aHJtLmF0bGFzc2lhbi5uZXQiLCJ1c2VyIjp7ImFjY291bnRJZ...</msg>
+<status status="PASS" starttime="20231214 18:48:07.632" endtime="20231214 18:48:07.637"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>mysession</arg>
+<arg>${BASE_URL}</arg>
+<arg>headers=${headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20231214 18:48:07.640" level="INFO">Creating Session using : alias=mysession, url=https://api.zephyrscale.smartbear.com/v2, headers={'Content-Type': 'application/json', 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb250ZXh0Ijp7ImJhc2VVcmwiOiJodHRwczovL3dhdmVybGV5aHJtLmF0bGFzc2lhbi5uZXQiLCJ1c2VyIjp7ImFjY291bnRJZCI6IjcxMjAyMDo5MzJhYjM0Yy1kNGUxLTQ1OWUtYTFjMC1hYjcyNGVmZjAyNTgifX0sImlzcyI6ImNvbS5rYW5vYWgudGVzdC1tYW5hZ2VyIiwic3ViIjoiODU3ZmY3M2YtYWE4Ni0zMzJiLTlmYzYtYWEzOTg5OWNlM2MxIiwiZXhwIjoxNzIwODQ1MjM2LCJpYXQiOjE2ODkzMDkyMzZ9.X1lsZwIXOUsSpGlgIH43EptcguUBJATxmZ4-wW3Sk54'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20231214 18:48:07.638" endtime="20231214 18:48:07.642"/>
+</kw>
+<status status="PASS" starttime="20231214 18:48:04.058" endtime="20231214 18:48:07.643"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{payload}</var>
+<arg>name=${cycle_name}</arg>
+<arg>projectKey=${PROJECT_KEY}</arg>
+<arg>folderId=11389742</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20231214 18:48:08.720" level="INFO">&amp;{payload} = { name=Test - 2023-12-14 18:48:00 | projectKey=GH | folderId=11389742 }</msg>
+<status status="PASS" starttime="20231214 18:48:07.644" endtime="20231214 18:48:08.720"/>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<var>${response}</var>
+<arg>mysession</arg>
+<arg>/testcycles</arg>
+<arg>data=${payload}</arg>
+<doc>*DEPRECATED* Please use `POST On Session` instead.</doc>
+<msg timestamp="20231214 18:48:08.723" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
+<msg timestamp="20231214 18:48:09.757" level="INFO">POST Request : url=https://api.zephyrscale.smartbear.com/v2/testcycles 
+ path_url=/v2/testcycles 
+ headers={'User-Agent': 'python-requests/2.31.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb250ZXh0Ijp7ImJhc2VVcmwiOiJodHRwczovL3dhdmVybGV5aHJtLmF0bGFzc2lhbi5uZXQiLCJ1c2VyIjp7ImFjY291bnRJZCI6IjcxMjAyMDo5MzJhYjM0Yy1kNGUxLTQ1OWUtYTFjMC1hYjcyNGVmZjAyNTgifX0sImlzcyI6ImNvbS5rYW5vYWgudGVzdC1tYW5hZ2VyIiwic3ViIjoiODU3ZmY3M2YtYWE4Ni0zMzJiLTlmYzYtYWEzOTg5OWNlM2MxIiwiZXhwIjoxNzIwODQ1MjM2LCJpYXQiOjE2ODkzMDkyMzZ9.X1lsZwIXOUsSpGlgIH43EptcguUBJATxmZ4-wW3Sk54', 'Content-Length': '82'} 
+ body={"name": "Test - 2023-12-14 18:48:00", "projectKey": "GH", "folderId": "11389742"} 
+ </msg>
+<msg timestamp="20231214 18:48:09.758" level="INFO">POST Response : url=https://api.zephyrscale.smartbear.com/v2/testcycles 
+ status=201, reason=Created 
+ headers={'Date': 'Thu, 14 Dec 2023 11:48:09 GMT', 'Content-Type': 'application/json', 'Content-Length': '100', 'Connection': 'keep-alive', 'Location': 'https://api.zephyrscale.smartbear.com/v2/testcycles/16004870', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'Access-Control-Allow-Origin': 'https://docs.adaptavist.io'} 
+ body={"id":16004870,"self":"https://api.zephyrscale.smartbear.com/v2/testcycles/16004870","key":"GH-R28"} 
+ </msg>
+<msg timestamp="20231214 18:48:09.759" level="INFO">d:\Projects\Research\myrobot\.venv\Lib\site-packages\urllib3\connectionpool.py:1099: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.zephyrscale.smartbear.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg timestamp="20231214 18:48:09.761" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20231214 18:48:08.721" endtime="20231214 18:48:09.762"/>
+</kw>
+<status status="PASS" starttime="20231214 18:47:53.022" endtime="20231214 18:48:09.763"/>
 </kw>
 <kw name="Post action test" type="TEARDOWN">
 <kw name="Get Test Case ID" library="utils">
@@ -14,18 +108,18 @@
 <var>${test_case_name}</var>
 <return>
 <value>${TEST NAME}</value>
-<status status="PASS" starttime="20231213 18:21:25.490" endtime="20231213 18:21:25.491"/>
+<status status="PASS" starttime="20231214 18:48:09.777" endtime="20231214 18:48:09.778"/>
 </return>
-<msg timestamp="20231213 18:21:25.493" level="INFO">${test_case_name} = &lt;GH-001&gt; --- Test something</msg>
-<status status="PASS" starttime="20231213 18:21:24.712" endtime="20231213 18:21:25.494"/>
+<msg timestamp="20231214 18:48:09.780" level="INFO">${test_case_name} = Crete test Cycle</msg>
+<status status="PASS" starttime="20231214 18:48:09.773" endtime="20231214 18:48:09.781"/>
 </kw>
 <kw name="Split String" library="String">
 <var>${tc_parts}</var>
 <arg>${test_case_name}</arg>
 <arg>---</arg>
 <doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
-<msg timestamp="20231213 18:21:25.779" level="INFO">${tc_parts} = ['&lt;GH-001&gt; ', ' Test something']</msg>
-<status status="PASS" starttime="20231213 18:21:25.494" endtime="20231213 18:21:25.780"/>
+<msg timestamp="20231214 18:48:09.786" level="INFO">${tc_parts} = ['Crete test Cycle']</msg>
+<status status="PASS" starttime="20231214 18:48:09.782" endtime="20231214 18:48:09.787"/>
 </kw>
 <kw name="Replace String" library="String">
 <var>${first_part}</var>
@@ -33,8 +127,8 @@
 <arg>&lt;</arg>
 <arg>${EMPTY}</arg>
 <doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
-<msg timestamp="20231213 18:21:26.023" level="INFO">${first_part} = GH-001&gt; </msg>
-<status status="PASS" starttime="20231213 18:21:25.782" endtime="20231213 18:21:26.025"/>
+<msg timestamp="20231214 18:48:09.798" level="INFO">${first_part} = Crete test Cycle</msg>
+<status status="PASS" starttime="20231214 18:48:09.788" endtime="20231214 18:48:09.799"/>
 </kw>
 <kw name="Replace String" library="String">
 <var>${last_part}</var>
@@ -42,27 +136,27 @@
 <arg>&gt;</arg>
 <arg>${EMPTY}</arg>
 <doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
-<msg timestamp="20231213 18:21:28.561" level="INFO">${last_part} = GH-001 </msg>
-<status status="PASS" starttime="20231213 18:21:26.026" endtime="20231213 18:21:28.561"/>
+<msg timestamp="20231214 18:48:09.809" level="INFO">${last_part} = Crete test Cycle</msg>
+<status status="PASS" starttime="20231214 18:48:09.801" endtime="20231214 18:48:09.810"/>
 </kw>
 <kw name="Strip String" library="String">
 <var>${id_part}</var>
 <arg>${last_part}</arg>
 <doc>Remove leading and/or trailing whitespaces from the given string.</doc>
-<msg timestamp="20231213 18:21:30.489" level="INFO">${id_part} = GH-001</msg>
-<status status="PASS" starttime="20231213 18:21:28.562" endtime="20231213 18:21:30.489"/>
+<msg timestamp="20231214 18:48:09.816" level="INFO">${id_part} = Crete test Cycle</msg>
+<status status="PASS" starttime="20231214 18:48:09.813" endtime="20231214 18:48:09.817"/>
 </kw>
 <return>
 <value>${id_part}</value>
-<status status="PASS" starttime="20231213 18:21:30.490" endtime="20231213 18:21:36.053"/>
+<status status="PASS" starttime="20231214 18:48:09.850" endtime="20231214 18:48:09.853"/>
 </return>
-<status status="PASS" starttime="20231213 18:21:23.864" endtime="20231213 18:21:36.058"/>
+<status status="PASS" starttime="20231214 18:48:09.770" endtime="20231214 18:48:09.855"/>
 </kw>
-<status status="PASS" starttime="20231213 18:21:23.042" endtime="20231213 18:21:36.060"/>
+<status status="PASS" starttime="20231214 18:48:09.766" endtime="20231214 18:48:09.857"/>
 </kw>
-<status status="PASS" starttime="20231213 18:21:23.028" endtime="20231213 18:21:36.062"/>
+<status status="PASS" starttime="20231214 18:47:53.016" endtime="20231214 18:48:09.860"/>
 </test>
-<status status="PASS" starttime="20231213 18:21:22.502" endtime="20231213 18:21:36.071"/>
+<status status="PASS" starttime="20231214 18:47:52.063" endtime="20231214 18:48:09.894"/>
 </suite>
 <statistics>
 <total>
@@ -75,5 +169,6 @@
 </suite>
 </statistics>
 <errors>
+<msg timestamp="20231214 18:48:08.723" level="WARN">Keyword 'RequestsLibrary.Post Request' is deprecated. Please use `POST On Session` instead.</msg>
 </errors>
 </robot>
