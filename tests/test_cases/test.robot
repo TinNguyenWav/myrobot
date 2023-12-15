@@ -3,6 +3,7 @@ Library             RequestsLibrary
 Resource            ../../resources/keywords/zephyr_scale_integrate.resource
 Resource            ../../resources/keywords/utils.resource
 
+Test Setup          Setup action test
 Test Teardown       Post action test
 
 
@@ -27,10 +28,17 @@ Test get test case
 Crete test Cycle
     Create test Cycle
 
-<GH-001> --- Test something
-    Log    hello
+GH-T126 --- Create test execution test
+    Sleep    5s    # Pause for 2 seconds
+    Log    Done test
 
 
 *** Keywords ***
+Setup action test
+    Set test case start time
+
 Post action test
-    Get Test Case ID
+    Set test execution elapsed
+    ${test_message}=    Set Variable    ${TEST MESSAGE}
+    Create test execution result
+    Log    Done test

@@ -1,6 +1,7 @@
 # Ignore output files and directories
 /results/
 /output/
+*.xml
 
 # Ignore Python-related files
 __pycache__/

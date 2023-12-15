@@ -1,10 +1,12 @@
 *** Settings ***
+Resource            ../../resources/keywords/utils.resource
+Resource            ../../resources/pages/loginPage.resource
 Resource            ../../resources/pages/employeesPage.resource
 Resource            ../../resources/keywords/common_test_steps.resource
-Resource            ../../resources/pages/loginPage.resource
+Resource            ../../resources/keywords/zephyr_scale_integrate.resource
 
-Test Setup          Test case Setup
-Test Teardown       Test case Teardown
+Test Setup          Setup action test
+Test Teardown       Post action test
 
 
 *** Test Cases ***
@@ -70,3 +72,13 @@ Test case Setup
 
 Test case Teardown
     Close Browser
+
+Setup action test
+    Set test case start time
+    Open Login page
+
+Post action test
+    Set test execution elapsed
+    ${test_message}=    Set Variable    ${TEST MESSAGE}
+    Create test execution result
+    Log    Done test
