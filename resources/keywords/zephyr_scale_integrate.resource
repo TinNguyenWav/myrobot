@@ -7,40 +7,34 @@ Resource    ../../configurations/api_credentials.resource
 
 
 *** Variables ***
-${BASE_URL}         https://api.zephyrscale.smartbear.com/v2
+${ZS_URL}           https://api.zephyrscale.smartbear.com/v2
 # ${HEADERS}    {'Content-Type': 'application/json','Authorization': 'Bearer ${API_TOKEN}'}
 ${Content_Type}     application/json
 
 
 *** Keywords ***
-Create new session
-    ${headers}=    Create Dictionary    Content-Type=${Content_Type}    Authorization=Bearer ${API_ACCESS_TOKEN}
-    Create Session    mysession    ${BASE_URL}    headers=${headers}
-
-Create test Cycle
+Create test cycle at folder
+    [Arguments]    ${folder_name}
+    ${endpoint}=    Set Variable    /testcycles
     ${cycle_name}=    Generate test cycle name
-    ${folder_id}=    Set Variable    11389742
-    Create new session
-    ${payload}=    Create Dictionary
+    ${folder_id}=    Get test cycle folder ID by name    ${folder_name}
+    &{payload}=    Create Dictionary
     ...    name= ${cycle_name}
     ...    projectKey=${PROJECT_KEY}
     ...    folderId=${folder_id}
-    ${json_payload}=    Evaluate    json.dumps($payload, ensure_ascii=False)
-    ${response}=    POST On Session    mysession    /testcycles    data=${json_payload}
-
+    ${response}=    Call POST request    ${endpoint}    &{payload}
     ${cycle_key}=    Set Variable    ${response.json()}[key]
-    Log    ${cycle_key}
+    Set Global Variable    ${cycle_key}
+
+Get curent cycle key
     RETURN    ${cycle_key}
 
 Update test case result to Zephyr Scale
-    Get Test Case ID
+    Get Test Case key
 
 Excute test
     [Arguments]    ${test_suite_name}
     Log    Call kyeword to trigger the test
-
-Log the token from local file
-    Log    ${API_ACCESS_TOKEN}
 
 Get all test cases
     Create new session
@@ -63,20 +57,87 @@ Generate test cycle name
     RETURN    ${cycle_name}
 
 Create test execution result
-    # [Arguments]    ${elapsed}
     ${endpoint}=    Set Variable    /testexecutions
-    ${cycle_key}=    Create test Cycle
-    ${test_case_id}=    Get Test Case ID
+    ${cycle_key}=    Get curent cycle key
+    ${test_case_key}=    Get Test Case key
     ${test_case_status}=    Get test case status
-    # ${execution_time}=    Set Variable    ${elapsed}
+    ${comment}=    Get test case message
     ${execution_time}=    Get Variable Value    ${elapsed}
-    Create new session
     &{payload}=    Create Dictionary
     ...    projectKey=${PROJECT_KEY}
-    ...    testCaseKey=${test_case_id}
+    ...    testCaseKey=${test_case_key}
     ...    testCycleKey=${cycle_key}
     ...    statusName=${test_case_status}
     ...    executionTime=${execution_time}
+    ...    comment=${comment}
+    ${response}=    Call POST request    ${endpoint}    &{payload}
+
+Get all folders test cycle
+    ${endpoint}=    Set Variable    /folders?folderType=TEST_CYCLE
+    ${response}=    Call GET request    ${endpoint}
+    @{values}=    Set Variable    ${response.json()}[values]
+    RETURN    @{values}
+
+Get test cycle folder ID by name
+    [Arguments]    ${folder_name}
+    @{foler_list}=    Get all folders test cycle
+    FOR    ${element}    IN    @{foler_list}
+        ${current_folder_name}=    set Variable    ${element['name']}
+        IF    "${current_folder_name}" == "${folder_name}"
+            ${current_folder_id}=    set Variable    ${element['id']}
+            RETURN    ${current_folder_id}
+        END
+    END
+    ${folder_id}=    Create test cycle folder    ${folder_name}
+    IF    "${folder_id}" != "None"    RETURN    ${folder_id}
+    Run Keyword    Fatal Error    No folder found
+
+# Create test cycle folder
+#    [Arguments]    ${name}
+#    ${endpoint}=    Set Variable    /folders
+#    ${folder_name}=    Set Variable    ${name}
+#    ${folder_type}=    Set Variable    TEST_CYCLE
+#    Create new session
+#    &{payload}=    Create Dictionary
+#    ...    projectKey=${PROJECT_KEY}
+#    ...    name=${folder_name}
+#    ...    folderType=${folder_type}
+#    ${payload_json}=    Evaluate    json.dumps($payload, ensure_ascii=False)
+#    ${response}=    POST On Session    mysession    ${endpoint}    data=${payload_json}
+#    ${folder_id}=    Set Variable    ${response.json()}[id]
+#    RETURN    ${folder_id}
+
+Create test cycle folder
+    [Arguments]    ${name}
+    ${endpoint}=    Set Variable    /folders
+    ${folder_name}=    Set Variable    ${name}
+    ${folder_type}=    Set Variable    TEST_CYCLE
+    &{payload}=    Create Dictionary
+    ...    projectKey=${PROJECT_KEY}
+    ...    name=${folder_name}
+    ...    folderType=${folder_type}
+    ${response}=    Call POST request    ${endpoint}    &{payload}
+    ${folder_id}=    Set Variable    ${response.json()}[id]
+    RETURN    ${folder_id}
+
+#######################################################################
+### API support keywords
+
+Create new session
+    Set Log Level    NONE    # disable logging
+    ${headers}=    Create Dictionary    Content-Type=${Content_Type}    Authorization=Bearer ${API_ACCESS_TOKEN}
+    Create Session    mysession    ${ZS_URL}    headers=${headers}
+    Set Log Level    INFO    # enable logging
+
+Call GET request
+    [Arguments]    ${endpoint}
+    Create new session
+    ${response}=    GET On Session    mysession    ${endpoint}
+    RETURN    ${response}
+
+Call POST request
+    [Arguments]    ${endpoint}    &{payload}
+    Create new session
     ${payload_json}=    Evaluate    json.dumps($payload, ensure_ascii=False)
     ${response}=    POST On Session    mysession    ${endpoint}    data=${payload_json}
-    Log    ${response}
+    RETURN    ${response}
