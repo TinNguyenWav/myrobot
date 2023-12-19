@@ -16,7 +16,8 @@ Get curent cycle key
     RETURN    ${cycle_key}
 
 Update test case result to Zephyr Scale
-    Get Test Case key
+    Get test execution elapsed
+    Create test execution result
 
 ################################# API support keywords ######################################
 
@@ -35,48 +36,6 @@ Get test cases by ID
     Log    ${response.status_code}
     Log    ${response.content}
     Delete All Sessions
-
-########## TEST EXECUTION APIS ##########
-
-Create test execution result
-    ${endpoint}=    Set Variable    /testexecutions
-    ${cycle_key}=    Get curent cycle key
-    ${test_case_key}=    Get Test Case key
-    ${test_case_status}=    Get test case status
-    ${comment}=    Get test case message
-    ${execution_time}=    Get Variable Value    ${elapsed}
-    ${environment_name}=    Set Variable    UAT
-    &{payload}=    Create Dictionary
-    ...    projectKey=${PROJECT_KEY}
-    ...    testCaseKey=${test_case_key}
-    ...    testCycleKey=${cycle_key}
-    ...    statusName=${test_case_status}
-    ...    executionTime=${execution_time}
-    ...    comment=${comment}
-    ...    environmentName=${environment_name}
-    ${response}=    Call POST request    ${endpoint}    &{payload}
-
-########## TEST FOLDER APIS #############
-
-Get all folders test cycle
-    ${endpoint}=    Set Variable    /folders?folderType=TEST_CYCLE
-    ${response}=    Call GET request    ${endpoint}
-    @{values}=    Set Variable    ${response.json()}[values]
-    RETURN    @{values}
-
-Get test cycle folder ID by name
-    [Arguments]    ${folder_name}
-    @{foler_list}=    Get all folders test cycle
-    FOR    ${element}    IN    @{foler_list}
-        ${current_folder_name}=    set Variable    ${element['name']}
-        IF    "${current_folder_name}" == "${folder_name}"
-            ${current_folder_id}=    set Variable    ${element['id']}
-            RETURN    ${current_folder_id}
-        END
-    END
-    ${folder_id}=    Create test cycle folder    ${folder_name}
-    IF    "${folder_id}" != "None"    RETURN    ${folder_id}
-    Run Keyword    Fatal Error    No folder found
 
 ########## TEST CYCLE APIS ##############
 
@@ -112,6 +71,48 @@ Create test cycle folder
     ${folder_id}=    Set Variable    ${response.json()}[id]
     RETURN    ${folder_id}
 
+########## TEST FOLDER APIS #############
+
+Get all folders test cycle
+    ${endpoint}=    Set Variable    /folders?folderType=TEST_CYCLE
+    ${response}=    Call GET request    ${endpoint}
+    @{values}=    Set Variable    ${response.json()}[values]
+    RETURN    @{values}
+
+Get test cycle folder ID by name
+    [Arguments]    ${folder_name}
+    @{foler_list}=    Get all folders test cycle
+    FOR    ${element}    IN    @{foler_list}
+        ${current_folder_name}=    set Variable    ${element['name']}
+        IF    "${current_folder_name}" == "${folder_name}"
+            ${current_folder_id}=    set Variable    ${element['id']}
+            RETURN    ${current_folder_id}
+        END
+    END
+    ${folder_id}=    Create test cycle folder    ${folder_name}
+    IF    "${folder_id}" != "None"    RETURN    ${folder_id}
+    Run Keyword    Fatal Error    No folder found
+
+########## TEST EXECUTION APIS ##########
+
+Create test execution result
+    ${endpoint}=    Set Variable    /testexecutions
+    ${cycle_key}=    Get curent cycle key
+    ${test_case_key}=    Get Test Case key
+    ${test_case_status}=    Get test case status
+    ${execution_time}=    Get Variable Value    ${elapsed}
+    ${environment_name}=    Set Variable    UAT
+    ${comment}=    Get test case message
+    &{payload}=    Create Dictionary
+    ...    projectKey=${PROJECT_KEY}
+    ...    testCycleKey=${cycle_key}
+    ...    testCaseKey=${test_case_key}
+    ...    statusName=${test_case_status}
+    ...    executionTime=${execution_time}
+    ...    environmentName=${environment_name}
+    ...    comment=${comment}
+    ${response}=    Call POST request    ${endpoint}    &{payload}
+    Delete All Sessions
 ########## COMMON APIS SUPPORT ##############
 
 Create new session

@@ -1,5 +1,4 @@
 *** Settings ***
-Library             SeleniumLibrary
 Resource            ../../resources/keywords/utils.resource
 Resource            ../../resources/pages/loginPage.resource
 Resource            ../../resources/pages/employeesPage.resource
@@ -18,11 +17,6 @@ GH-T125 --- Verify that admin user can access Employee page
     Login system with admin user account
     Access Employees page
     Employees page should be opened
-
-# Verify that admin user can
-#    Login system with admin user account
-#    Access Employees page
-#    Click Add Employee button
 
 GH-T128 --- Verify that admin user can search Employee profile by Email
     Login system with admin user account
@@ -60,7 +54,5 @@ Test case Setup
     Open Login page
 
 Test case Teardown
-    Set test execution elapsed
-    Create test execution result
-    Log    Done test
     Close Browser
+    Update test case result to Zephyr Scale

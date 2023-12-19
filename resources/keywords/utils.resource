@@ -57,7 +57,7 @@ Set test case end time
     Set Global Variable    ${end}
     RETURN    ${end}
 
-Set test execution elapsed
+Get test execution elapsed
     ${end}=    Set test case end time
     ${elapsed_time}=    Subtract Date From Date    ${end}    ${start}
     ${elapsed}=    Evaluate    ${elapsed_time}*1000
