@@ -24,5 +24,3 @@ ${NORMAL PASSWORD}      Robot@123456
 # System
 ${BROWSER}              Chrome
 ${DELAY}                0
-
-# API token

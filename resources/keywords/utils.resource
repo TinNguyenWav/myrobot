@@ -1,12 +1,12 @@
 *** Settings ***
 Library     String
 Library     DateTime
-Library     RequestsLibrary
 Library     Collections
+Library     RequestsLibrary
 
 
 *** Variables ***
-${elapsed}      ${EMPTY}
+# ${elapsed}    ${EMPTY}
 
 
 *** Keywords ***
@@ -42,9 +42,6 @@ Get test case status
 Get test case message
     RETURN    ${TEST_MESSAGE}
 
-Get test case execution time
-    Log    st
-
 Get current date time
     ${current_time}=    Get Current Date    result_format=%Y-%m-%d %H:%M:%S
     Log    ${current_time}
@@ -67,6 +64,6 @@ Set test execution elapsed
     Set Global Variable    ${elapsed}
     RETURN    ${elapsed}
 
-Set Masked Variables
-    Set Suite Variable    ${ACCESS_TOKEN}    my_secure_access_token
-    Set Suite Variable    ${PASSWORD}    my_secure_password
+# Set Masked Variables
+#    Set Suite Variable    ${ACCESS_TOKEN}    my_secure_access_token
+#    Set Suite Variable    ${PASSWORD}    my_secure_password

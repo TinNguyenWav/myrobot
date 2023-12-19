@@ -8,33 +8,19 @@ Resource    ../../configurations/api_credentials.resource
 
 *** Variables ***
 ${ZS_URL}           https://api.zephyrscale.smartbear.com/v2
-# ${HEADERS}    {'Content-Type': 'application/json','Authorization': 'Bearer ${API_TOKEN}'}
 ${Content_Type}     application/json
 
 
 *** Keywords ***
-Create test cycle at folder
-    [Arguments]    ${folder_name}
-    ${endpoint}=    Set Variable    /testcycles
-    ${cycle_name}=    Generate test cycle name
-    ${folder_id}=    Get test cycle folder ID by name    ${folder_name}
-    &{payload}=    Create Dictionary
-    ...    name= ${cycle_name}
-    ...    projectKey=${PROJECT_KEY}
-    ...    folderId=${folder_id}
-    ${response}=    Call POST request    ${endpoint}    &{payload}
-    ${cycle_key}=    Set Variable    ${response.json()}[key]
-    Set Global Variable    ${cycle_key}
-
 Get curent cycle key
     RETURN    ${cycle_key}
 
 Update test case result to Zephyr Scale
     Get Test Case key
 
-Excute test
-    [Arguments]    ${test_suite_name}
-    Log    Call kyeword to trigger the test
+################################# API support keywords ######################################
+
+########## TEST CASES APIS ##########
 
 Get all test cases
     Create new session
@@ -50,11 +36,7 @@ Get test cases by ID
     Log    ${response.content}
     Delete All Sessions
 
-Generate test cycle name
-    ${current_suite_name}=    Get Suite Name
-    ${current_date_time}=    Get current date time
-    ${cycle_name}=    Set Variable    ${current_suite_name} - ${current_date_time}
-    RETURN    ${cycle_name}
+########## TEST EXECUTION APIS ##########
 
 Create test execution result
     ${endpoint}=    Set Variable    /testexecutions
@@ -63,6 +45,7 @@ Create test execution result
     ${test_case_status}=    Get test case status
     ${comment}=    Get test case message
     ${execution_time}=    Get Variable Value    ${elapsed}
+    ${environment_name}=    Set Variable    UAT
     &{payload}=    Create Dictionary
     ...    projectKey=${PROJECT_KEY}
     ...    testCaseKey=${test_case_key}
@@ -70,7 +53,10 @@ Create test execution result
     ...    statusName=${test_case_status}
     ...    executionTime=${execution_time}
     ...    comment=${comment}
+    ...    environmentName=${environment_name}
     ${response}=    Call POST request    ${endpoint}    &{payload}
+
+########## TEST FOLDER APIS #############
 
 Get all folders test cycle
     ${endpoint}=    Set Variable    /folders?folderType=TEST_CYCLE
@@ -92,20 +78,26 @@ Get test cycle folder ID by name
     IF    "${folder_id}" != "None"    RETURN    ${folder_id}
     Run Keyword    Fatal Error    No folder found
 
-# Create test cycle folder
-#    [Arguments]    ${name}
-#    ${endpoint}=    Set Variable    /folders
-#    ${folder_name}=    Set Variable    ${name}
-#    ${folder_type}=    Set Variable    TEST_CYCLE
-#    Create new session
-#    &{payload}=    Create Dictionary
-#    ...    projectKey=${PROJECT_KEY}
-#    ...    name=${folder_name}
-#    ...    folderType=${folder_type}
-#    ${payload_json}=    Evaluate    json.dumps($payload, ensure_ascii=False)
-#    ${response}=    POST On Session    mysession    ${endpoint}    data=${payload_json}
-#    ${folder_id}=    Set Variable    ${response.json()}[id]
-#    RETURN    ${folder_id}
+########## TEST CYCLE APIS ##############
+
+Create test cycle at folder
+    [Arguments]    ${folder_name}
+    ${endpoint}=    Set Variable    /testcycles
+    ${cycle_name}=    Generate test cycle name
+    ${folder_id}=    Get test cycle folder ID by name    ${folder_name}
+    &{payload}=    Create Dictionary
+    ...    name= ${cycle_name}
+    ...    projectKey=${PROJECT_KEY}
+    ...    folderId=${folder_id}
+    ${response}=    Call POST request    ${endpoint}    &{payload}
+    ${cycle_key}=    Set Variable    ${response.json()}[key]
+    Set Global Variable    ${cycle_key}
+
+Generate test cycle name
+    ${current_suite_name}=    Get Suite Name
+    ${current_date_time}=    Get current date time
+    ${cycle_name}=    Set Variable    ${current_suite_name} - ${current_date_time}
+    RETURN    ${cycle_name}
 
 Create test cycle folder
     [Arguments]    ${name}
@@ -120,8 +112,7 @@ Create test cycle folder
     ${folder_id}=    Set Variable    ${response.json()}[id]
     RETURN    ${folder_id}
 
-#######################################################################
-### API support keywords
+########## COMMON APIS SUPPORT ##############
 
 Create new session
     Set Log Level    NONE    # disable logging

@@ -43,29 +43,12 @@ GH-T17 --- Verify that admin user can search Employee profile by Employee ID
     Access Employees page
     Employees page should be opened
     Search by "Employee ID"    VNE00006
-    Page Should Contain    VNE00006_123
-
-Debug test case
-    [Setup]    NONE
-    Log    st
-    [Teardown]    NONE
-#    Login system with admin user account
-#    Access Employees page
-#    # Click on "Edit" option on Action menu    user00006@wsvietnam.com
-
-#    Click on Employee name "user00006 Nguyen"    user00006@wsvietnam.com
-#    # Click on sort icon of column name "ID"
-#    # Click on sort icon of column name "Name"
-#    # Click on sort icon of column name "Email"
-#    # Click on sort icon of column name "Mobile"
-#    # Click on sort icon of column name "Join Date"
-#    # Click on sort icon of column name "Position"
-#    # Click on sort icon of column name "Department"
+    Page Should Contain    VNE00006
 
 
 *** Keywords ***
 Test Suite Setup
-    Create test cycle at folder    Test Sample 1
+    Create test cycle at folder    Smoke Testing
     Log    This is suite setup
 
 Test Suite Teardown
@@ -78,7 +61,6 @@ Test case Setup
 
 Test case Teardown
     Set test execution elapsed
-    # ${test_message}=    Set Variable    ${TEST MESSAGE}
     Create test execution result
     Log    Done test
     Close Browser
