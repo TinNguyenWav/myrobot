@@ -1,9 +1,9 @@
 *** Settings ***
-Resource            ../../resources/keywords/utils.resource
-Resource            ../../resources/pages/loginPage.resource
-Resource            ../../resources/pages/employeesPage.resource
-Resource            ../../resources/keywords/common_test_steps.resource
-Resource            ../../resources/keywords/zephyr_scale_integrate.resource
+Resource            ../../../resources/keywords/utils.resource
+Resource            ../../../resources/pages/loginPage.resource
+Resource            ../../../resources/pages/employeesPage.resource
+Resource            ../../../resources/keywords/common_test_steps.resource
+Resource            ../../../resources/keywords/zephyr_scale_integrate.resource
 
 Suite Setup         Test Suite Setup
 Test Setup          Test case Setup
@@ -38,21 +38,3 @@ GH-T17 --- Verify that admin user can search Employee profile by Employee ID
     Employees page should be opened
     Search by "Employee ID"    VNE00006
     Page Should Contain    VNE00006
-
-
-*** Keywords ***
-Test Suite Setup
-    Create test cycle at folder    Smoke Testing
-    Log    This is suite setup
-
-Test Suite Teardown
-    # // code here...
-    Log    Suite Teardown
-
-Test case Setup
-    Set test case start time
-    Open Login page
-
-Test case Teardown
-    Close Browser
-    Update test case result to Zephyr Scale

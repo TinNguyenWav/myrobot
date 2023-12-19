@@ -35,7 +35,6 @@ Get test cases by ID
     ${response}=    GET On Session    mysession    /testcases/${test_case_id}
     Log    ${response.status_code}
     Log    ${response.content}
-    Delete All Sessions
 
 ########## TEST CYCLE APIS ##############
 
@@ -112,7 +111,7 @@ Create test execution result
     ...    environmentName=${environment_name}
     ...    comment=${comment}
     ${response}=    Call POST request    ${endpoint}    &{payload}
-    Delete All Sessions
+
 ########## COMMON APIS SUPPORT ##############
 
 Create new session

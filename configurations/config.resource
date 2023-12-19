@@ -9,7 +9,7 @@ Library             SeleniumLibrary
 
 *** Variables ***
 # Server and domain info
-${BASE_URL}             https://uat.wsvhrm.com/
+${BASE_URL}             https://uat.wsvhrm.com
 ${SERVER}               localhost:7272
 ${LOGIN URL}            http://${SERVER}/
 ${WELCOME URL}          http://${SERVER}/welcome.html
@@ -24,3 +24,5 @@ ${NORMAL PASSWORD}      Robot@123456
 # System
 ${BROWSER}              Chrome
 ${DELAY}                0
+${RETRY}                5x
+${INTERVAL}             5s

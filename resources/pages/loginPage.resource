@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    ../../configurations/config.resource
+Resource    ../keywords/command.resource
 
 
 *** Variables ***
@@ -27,8 +28,10 @@ Click Login button
 
 Login with username and password
     [Arguments]    ${username}    ${password}
+    Stop logging info
     Input username    ${username}
     Input password    ${password}
+    Restore logging info
     Click Login button
 
 Login page is opened

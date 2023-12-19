@@ -2,6 +2,7 @@
 /results/
 /output/
 *.xml
+*.png
 
 # Ignore Python-related files
 __pycache__/
