@@ -1,7 +1,7 @@
 *** Settings ***
-Resource            ../../resources/keywords/common_test_steps.resource
-Resource            ../../resources/pages/loginPage.resource
 Resource            ../../resources/pages/homePage.resource
+Resource            ../../resources/pages/loginPage.resource
+Resource            ../../resources/keywords/common_test_steps.resource
 Resource            ../../resources/pageObjects/hearderPageObject.resource
 
 Test Setup          Test case Setup

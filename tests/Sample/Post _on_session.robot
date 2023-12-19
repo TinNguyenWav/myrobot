@@ -1,24 +1,25 @@
 *** Settings ***
-Library     RequestsLibrary
+Library             SeleniumLibrary
+
+Suite Setup         Open the browser
+Suite Teardown      Close All Browsers
 
 
 *** Variables ***
-${base_url}         https://jsonplaceholder.typicode.com
-${session_name}     example_session
-${post_data}        {"title": "foo", "body": "bar", "userId": 1}
+${URL}          https://forum.robotframework.org/t/setting-test-setup-is-not-allowed-in-resource-file-error-message-in-console/5926/6
+${BROWSER}      Chrome
 
 
 *** Test Cases ***
-Create and Post on Session
-    # Create a session with the base URL
-    Create Session    ${session_name}    ${base_url}
+Test Case 1
+    Log    Executing Test Case 1
+    # Your test steps for Test Case 1
 
-    # Perform a POST request using the session
-    ${response}=    Post On Session    ${session_name}    /posts    data=${post_data}    headers=${EMPTY}
+Test Case 2
+    Log    Executing Test Case 2
+    # Your test steps for Test Case 2
 
-    # Log the response status code and body
-    Log    Response Status Code: ${response.status_code}
-    Log    Response Body: ${response.text}
 
-    # Delete the session to clean up
-    Delete All Sessions
+*** Keywords ***
+Open the browser
+    Open Browser    ${URL}    ${BROWSER}
