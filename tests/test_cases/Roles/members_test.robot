@@ -18,4 +18,8 @@ Verify that Add Roles popup appear when user click on Add Role button
     Login system with admin user account
     Access Roles page
     Click on Add Role button
+    Add Role popup should be opened
+    Input text to name field    Some text here
+    Select Location name    Vietnam
+    Select Parent name    USER
     Sleep    5s

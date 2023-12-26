@@ -36,6 +36,28 @@ Expect webelement contains text
     ...    ${INTERVAL}
     ...    Element Should Contain    ${locator}    ${expected_text}
 
+Input text to text field
+    [Arguments]    ${locator}    ${text}
+    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Input Text    ${locator}    ${text}
+
+Select option in dropdown menu
+    [Arguments]    ${locator}    ${expected_item_text}
+    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Click Element    ${locator}
+    Click desired text from list    css:p-dropdownitem    ${expected_item_text}
+
+Get element by id or partial id
+    [Arguments]    ${id}
+    # ${element}=    Set Variable    css: [id*='${id}']
+    ${element}=    Get WebElement    css: [id*='${id}']
+    RETURN    ${element}
+    # css: [id*='locationId']
+
 Stop logging info
     Set Log Level    None
 

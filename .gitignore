@@ -1,6 +1,7 @@
 # Ignore output files and directories
 /results/
 /output/
+/tests/Sample/
 *.xml
 *.png
 
