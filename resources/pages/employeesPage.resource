@@ -1,5 +1,6 @@
 *** Settings ***
 Resource    ../../configurations/config.resource
+Resource    ../pageObjects/multipleSelectPanel.resource
 
 
 *** Variables ***
@@ -10,6 +11,7 @@ ${EMPLOYEE_ID_SEARCHBOX_ELEMENT1}       css=label:contains('Employee ID')
 ${EMPLOYEE_ID_SEARCHBOX_ELEMENT}        css=label:contains('Employee ID') ~ formly-field-input input
 ${ACTION_MENU_ELEMENT}                  css=Button.dropdown-toggle
 ${FIRST_ROW_ELEMENT}                    CSS=tbody tr
+${DEPARTMENT_ID_LOCATOR}                departments
 
 
 *** Keywords ***
@@ -81,3 +83,8 @@ Search by "${field}"
 Get Search box by label
     [Arguments]    ${label}
     ${Searchbox}=    Get WebElement    css=[ng-reflect-label='${label}'] input
+
+Select Department name
+    [Arguments]    ${name}
+    ${LOCATOR}=    Get element by id    ${DEPARTMENT_ID_LOCATOR}
+    Select option in dropdown menu    ${LOCATOR}    ${name}

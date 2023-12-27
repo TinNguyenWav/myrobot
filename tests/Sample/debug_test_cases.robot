@@ -10,6 +10,16 @@ Resource    ../../resources/keywords/zephyr_scale_integrate.resource
 # Test Teardown    Test case Teardown
 
 
+*** Test Cases ***
+This for debug purpos
+    Login system with admin user account
+    Access Employees page
+    Employees page should be opened
+    Select Department name    Department 2 - QC
+
+    Sleep    5s
+
+
 *** Keywords ***
 Link Should Be Clickable
     [Arguments]    ${locator}
