@@ -23,8 +23,8 @@ Click Add Employee button
 Click Search button
     Click Button    Search
 
-Input text to ${field} with ${value}
-    Input Text    css=[ng-reflect-label='${field}'] input    ${value}
+# Input text to ${field} with ${value}
+#    Input Text    css=[ng-reflect-label='${field}'] input    ${value}
 
 Click on "${action}" option on Action menu
     [Arguments]    ${Email}

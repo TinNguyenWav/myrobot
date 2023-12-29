@@ -15,7 +15,7 @@ Search with text
 
 Search and select option
     [Arguments]    ${tex}
-    ${DROPDOWN_ITEM_LOCATOR}    Set Variable    css:p-dropdownitem[ng-reflect-label='${tex}']
+    ${DROPDOWN_ITEM_LOCATOR}    Set Variable    css:p-dropdownitem[ng-reflect-label="${tex}"]
     Input text to text field    ${SEARCH_BOX_LOCATOR}    ${tex}
     Click Element    ${DROPDOWN_ITEM_LOCATOR}
 

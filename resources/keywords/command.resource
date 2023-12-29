@@ -4,6 +4,10 @@ Resource    ../pageObjects/multipleSelectPanel.resource
 Resource    utils.resource
 
 
+*** Variables ***
+${web_element_indicator}    selenium.webdriver.remote.webelement.WebElement
+
+
 *** Keywords ***
 # ------------------- GET ELEMENT -------------------#
 
@@ -33,21 +37,27 @@ Get Element by locator
     [Arguments]    ${locator}
 
     TRY
-        ${is_supported_locator}=    Is supported element locator    ${locator}
-        IF    "${is_supported_locator}" != "None"
-            Wait until element is Visible    ${locator}
-            ${element}=    Wait Until Keyword Succeeds
-            ...    ${RETRY}
-            ...    ${INTERVAL}
-            ...    Get WebElement    ${locator}
-            RETURN    ${element}
+        ${is_web_element}=    Is web element    ${locator}
+        IF    "${is_web_element}" == "True"
+            RETURN    ${locator}
         ELSE
-            TRY
-                ${element}=    Get element by partial id    ${locator}
+            ${locator}=    Search and Replace double quotes by single quote    ${locator}
+            ${is_supported_locator}=    Is supported element locator    ${locator}
+            IF    "${is_supported_locator}" != "None"
+                Wait until element is Visible    ${locator}
+                ${element}=    Wait Until Keyword Succeeds
+                ...    ${RETRY}
+                ...    ${INTERVAL}
+                ...    Get WebElement    ${locator}
                 RETURN    ${element}
-            EXCEPT
-                ${element}=    Get element by text    ${locator}
-                RETURN    ${element}
+            ELSE
+                TRY
+                    ${element}=    Get element by partial id    ${locator}
+                    RETURN    ${element}
+                EXCEPT
+                    ${element}=    Get element by text    ${locator}
+                    RETURN    ${element}
+                END
             END
         END
     EXCEPT
@@ -100,6 +110,9 @@ Input text to text field
     ...    ${INTERVAL}
     ...    Input Text    ${element}    ${text}
 
+Input text to ${field} with ${value}
+    Input Text    css=[ng-reflect-label='${field}'] input    ${value}
+
 Select option in dropdown menu
     [Documentation]    Select certain dropdown option by the provided locator and option value
     [Arguments]    ${locator}    ${expected_item_text}
@@ -131,6 +144,11 @@ Link Should Be Clickable
         ${enabled}=    Set Variable    ${None}
     END
     RETURN    ${status} and ${enabled}
+
+Is web element
+    [Arguments]    ${locator}
+    ${is_web_element}=    Is Text Contains    ${locator}    ${web_element_indicator}
+    RETURN    ${is_web_element}
 
 # ------------------- CUSTOM WAIT -------------------#
 

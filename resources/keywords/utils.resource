@@ -88,6 +88,12 @@ Is Text Start With
     ${result}=    Evaluate    "${actual}".startswith("${expected}")    # Evaluate returns a boolean value
     RETURN    ${result}
 
+Is Text Contains
+    [Arguments]    ${actual}    ${expected}
+    ${string_variable}=    Convert To String    ${actual}
+    ${status}=    Run Keyword And Return Status    Should Contain    ${string_variable}    ${expected}
+    RETURN    ${status}
+
 Is supported element locator
     [Documentation]    Return locator value incase the selector start with commonly used locators in Robot Framework:
     ...    id, name, xpath, css, link, class, tag, partial link, dom
@@ -96,3 +102,8 @@ Is supported element locator
         ${is_contains}=    Is Text Start With    ${Locator}    ${element}
         IF    "${is_contains}" == "True"    RETURN    True
     END
+
+Search and Replace double quotes by single quote
+    [Arguments]    ${original_string}
+    ${modified_string}=    Replace String    ${original_string}    "    '
+    RETURN    ${modified_string}
