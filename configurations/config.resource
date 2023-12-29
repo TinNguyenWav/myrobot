@@ -24,5 +24,5 @@ ${NORMAL PASSWORD}      Robot@123456
 # System
 ${BROWSER}              Chrome
 ${DELAY}                0
-${RETRY}                5x
+${RETRY}                3x
 ${INTERVAL}             5s

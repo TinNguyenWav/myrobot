@@ -82,9 +82,9 @@ Search by "${field}"
 
 Get Search box by label
     [Arguments]    ${label}
-    ${Searchbox}=    Get WebElement    css=[ng-reflect-label='${label}'] input
+    ${Searchbox}=    Get Element by locator    css=[ng-reflect-label='${label}'] input
 
 Select Department name
     [Arguments]    ${name}
-    ${LOCATOR}=    Get element by id    ${DEPARTMENT_ID_LOCATOR}
+    ${LOCATOR}=    Get Element by locator    ${DEPARTMENT_ID_LOCATOR}
     Select option in dropdown menu    ${LOCATOR}    ${name}

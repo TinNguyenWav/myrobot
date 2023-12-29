@@ -1,12 +1,13 @@
 *** Settings ***
 Resource    ../../configurations/config.resource
 Resource    ../pageObjects/multipleSelectPanel.resource
+Resource    utils.resource
 
 
 *** Keywords ***
 # ------------------- GET ELEMENT -------------------#
 
-Get element by id
+Get element by partial id
     [Documentation]    User can input partial ID to locate element
     [Arguments]    ${id}
     ${element}=    Wait Until Keyword Succeeds
@@ -23,6 +24,35 @@ Get element by text
     ...    ${INTERVAL}
     ...    Get WebElement    xpath: //*[contains(text(), '${text}')]
     RETURN    ${element}
+
+Get Element by locator
+    [Documentation]    Returns the WebElement matching the given locator.
+    ...    For supported locate, using the build in keyword.
+    ...    For unsupported locate, using the custom keyword.
+    ...    Keyword will find and return a web element based on specific criteria.
+    [Arguments]    ${locator}
+
+    TRY
+        ${is_supported_locator}=    Is supported element locator    ${locator}
+        IF    "${is_supported_locator}" != "None"
+            Wait until element is Visible    ${locator}
+            ${element}=    Wait Until Keyword Succeeds
+            ...    ${RETRY}
+            ...    ${INTERVAL}
+            ...    Get WebElement    ${locator}
+            RETURN    ${element}
+        ELSE
+            TRY
+                ${element}=    Get element by partial id    ${locator}
+                RETURN    ${element}
+            EXCEPT
+                ${element}=    Get element by text    ${locator}
+                RETURN    ${element}
+            END
+        END
+    EXCEPT
+        Fail    Element with locator ${locator} not found
+    END
 
 # ------------------- ACTIONS -------------------#
 
@@ -41,10 +71,11 @@ Click desired text from list
 Click on the web element
     [Documentation]    Click on element by provided locator with configured retry
     [Arguments]    ${locator}
+    ${element}=    Get Element by locator    ${locator}
     Wait Until Keyword Succeeds
     ...    ${RETRY}
     ...    ${INTERVAL}
-    ...    Click Element    ${locator}
+    ...    Click Element    ${element}
 
 Click on the link text
     [Documentation]    Click on element by provided partial link text
@@ -63,10 +94,11 @@ Click on element contains text
 Input text to text field
     [Documentation]    Input text to the text field located by the provided locator
     [Arguments]    ${locator}    ${text}
+    ${element}=    Get Element by locator    ${locator}
     Wait Until Keyword Succeeds
     ...    ${RETRY}
     ...    ${INTERVAL}
-    ...    Input Text    ${locator}    ${text}
+    ...    Input Text    ${element}    ${text}
 
 Select option in dropdown menu
     [Documentation]    Select certain dropdown option by the provided locator and option value
@@ -76,8 +108,6 @@ Select option in dropdown menu
     ...    ${INTERVAL}
     ...    Click Element    ${locator}
     Search and select option    ${expected_item_text}
-    Click Element    ${locator}
-    # Click desired text from list    css:p-dropdownitem    ${expected_item_text}
 
 # ------------------- ASSERTIONS -------------------#
 
@@ -87,6 +117,29 @@ Expect webelement contains text
     ...    ${RETRY}
     ...    ${INTERVAL}
     ...    Element Should Contain    ${locator}    ${expected_text}
+
+Link Should Be Clickable
+    [Arguments]    ${locator}
+
+    ${status}=    Run Keyword And Return Status
+    ...    Element Should Be Visible    ${locator}
+
+    # Check if link can be clicked
+    IF    ${status}
+        ${enabled}=    Element Should Be Enabled    ${locator}
+    ELSE
+        ${enabled}=    Set Variable    ${None}
+    END
+    RETURN    ${status} and ${enabled}
+
+# ------------------- CUSTOM WAIT -------------------#
+
+Wait until element is Visible
+    [Arguments]    ${locator}
+    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Run Keyword And Return Status    Element Should Be Visible    ${locator}
 
 # ------------------- LOGS -------------------#
 

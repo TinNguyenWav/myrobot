@@ -5,7 +5,7 @@ Resource    ../pages/employeesPage.resource
 
 
 *** Variables ***
-${SEARCH_BOX_LOCATOR}       css:.p-multiselect-panel input[role="textbox"]
+${SEARCH_BOX_LOCATOR}       css:input.p-dropdown-filter
 
 
 *** Keywords ***
@@ -15,5 +15,8 @@ Search with text
 
 Search and select option
     [Arguments]    ${tex}
+    ${DROPDOWN_ITEM_LOCATOR}    Set Variable    css:p-dropdownitem[ng-reflect-label='${tex}']
     Input text to text field    ${SEARCH_BOX_LOCATOR}    ${tex}
-    Click on element contains text    ${tex}
+    Click Element    ${DROPDOWN_ITEM_LOCATOR}
+
+    # Click on element contains text    ${tex}

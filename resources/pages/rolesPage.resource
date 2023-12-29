@@ -8,7 +8,7 @@ ${URL_ROLES}                        /app/user/roles
 ${LOCATION_MENU_ROLES_LOCATOR}      css:.roles-menu a
 ${ROLE_DETAILS_POPUP_LOCATOR}       css:app-role-detail
 ${ADD_ROLE_BUTTON_LOCATOR}          css:a.btn
-${NAME_LOCATOR}                     css:input-text[ng-reflect-label="Name"] input
+${NAME_LOCATOR}                     css:input-text[ng-reflect-label='Name'] input
 ${LOCATION_ID_LOCATOR}              locationId
 ${PARENT_ID_LOCATOR}                parentId
 
@@ -28,7 +28,8 @@ Click role name
     Click on the link text    ${name}
 
 Click on Add Role button
-    Click on the element with locator    ${ADD_ROLE_BUTTON_LOCATOR}
+    ${element}=    Get Element by locator    ${ADD_ROLE_BUTTON_LOCATOR}
+    Click Element    ${element}
 
 Input text to name field
     [Arguments]    ${text}
@@ -36,12 +37,12 @@ Input text to name field
 
 Select Location name
     [Arguments]    ${name}
-    ${LOCATOR}=    Get element by id    ${LOCATION_ID_LOCATOR}
+    ${LOCATOR}=    Get element by partial id    ${LOCATION_ID_LOCATOR}
     Select option in dropdown menu    ${LOCATOR}    ${name}
 
 Select Parent name
     [Arguments]    ${name}
-    ${LOCATOR}=    Get element by id    ${PARENT_ID_LOCATOR}
+    ${LOCATOR}=    Get element by partial id    ${PARENT_ID_LOCATOR}
     Select option in dropdown menu    ${LOCATOR}    ${name}
 
 Role detail popup should contain text

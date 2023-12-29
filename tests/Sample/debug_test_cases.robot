@@ -15,22 +15,6 @@ This for debug purpos
     Login system with admin user account
     Access Employees page
     Employees page should be opened
-    Select Department name    Department 2 - QC
-
+    # Select Department name    Department 2 - QC
+    Select by st    Fresher Dev Nguyen
     Sleep    5s
-
-
-*** Keywords ***
-Link Should Be Clickable
-    [Arguments]    ${locator}
-
-    ${status}=    Run Keyword And Return Status
-    ...    Element Should Be Visible    ${locator}
-
-    # Check if link can be clicked
-    IF    ${status}
-        ${enabled}=    Element Should Be Enabled    ${locator}
-    ELSE
-        ${enabled}=    Set Variable    ${None}
-    END
-    RETURN    ${status} and ${enabled}
