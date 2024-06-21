@@ -2,7 +2,7 @@
 Resource    ../../resources/pages/loginPage.resource
 Resource    ../../resources/pages/homePage.resource
 Resource    ../../resources/pageObjects/hearderPageObject.resource
-Resource    ../../../resources/keywords/zephyr_scale_integrate.resource
+Resource    ./zephyr_scale_integrate.resource
 
 
 *** Keywords ***

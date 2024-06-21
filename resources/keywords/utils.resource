@@ -3,6 +3,7 @@ Library     String
 Library     DateTime
 Library     Collections
 Library     RequestsLibrary
+Library     SeleniumLibrary
 
 
 *** Variables ***
@@ -107,3 +108,7 @@ Search and Replace double quotes by single quote
     [Arguments]    ${original_string}
     ${modified_string}=    Replace String    ${original_string}    "    '
     RETURN    ${modified_string}
+
+# Scroll Element Into View
+#    [Arguments]    ${element}
+#    Execute Javascript    arguments[0].scrollIntoView(true);    ${element}

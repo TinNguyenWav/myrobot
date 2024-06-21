@@ -69,12 +69,18 @@ Get Element by locator
 Click desired text from list
     [Documentation]    User can click on a certain text in a list by providing the list of element locators and the text
     [Arguments]    ${list_selector}    ${text}
+    # Wait until element is Visible    ${list_selector}
+    Wait Until Page Contains Element    ${list_selector}
     @{elements}=    Get Webelements    ${list_selector}
     FOR    ${element}    IN    @{elements}
+        ${element}=    Get Element by locator    ${element}
         ${elem_text}=    Get Text    ${element}
         IF    "${elem_text}" == "${text}"
-            Click on the web element    ${element}
-            RETURN
+            Wait Until Keyword Succeeds
+            ...    ${RETRY}
+            ...    ${INTERVAL}
+            ...    Click on the web element    ${element}
+            RETURN    ${element}
         END
     END
 
@@ -104,6 +110,7 @@ Click on element contains text
 Input text to text field
     [Documentation]    Input text to the text field located by the provided locator
     [Arguments]    ${locator}    ${text}
+    Wait until element is Visible    ${locator}
     ${element}=    Get Element by locator    ${locator}
     Wait Until Keyword Succeeds
     ...    ${RETRY}

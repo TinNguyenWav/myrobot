@@ -2,6 +2,7 @@
 Resource    ../../configurations/config.resource
 Resource    ../../resources/keywords/command.resource
 Resource    ../pageObjects/toastMessagePageObject.resource
+Resource    ../pageObjects/appConfirmationDialogPageObject.robot
 
 
 *** Variables ***
@@ -13,7 +14,10 @@ ${LOCATION_ID_LOCATOR}                  locationId
 ${SUBMIT_BUTTON_LOCATOR}                css:button.submit-btn
 ${ADD_ROLE_BUTTON_LOCATOR}              css:a.btn
 ${ROLE_DETAILS_POPUP_LOCATOR}           css:app-role-detail
-${LOCATION_MENU_ITEM_ROLES_LOCATOR}     css:.roles-menu a
+# ${LOCATION_MENU_ITEM_ROLES_LOCATOR}    css:.roles-menu a
+${LOCATION_MENU_ITEM_ROLES_LOCATOR}     css:.roles-menu li
+${ACTION_MENU_LIST_ELEMENT}             css:td.dropdown-container
+${ACTION_MENU_OPTION_ELEMENT}           css:button.dropdown-item
 
 
 *** Keywords ***
@@ -24,7 +28,11 @@ Access Roles page
 
 Click location name
     [Arguments]    ${name}
-    Click desired text from list    ${LOCATION_MENU_ITEM_ROLES_LOCATOR}    ${name}
+    ${element}=    Click desired text from list    ${LOCATION_MENU_ITEM_ROLES_LOCATOR}    ${name}
+    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Element Attribute Value Should Be    ${element}    class    active
 
 Click role name
     [Arguments]    ${name}
@@ -61,7 +69,7 @@ Roles page should be opened
 Add Role popup should be opened
     Expect webelement contains text    ${ROLE_DETAILS_POPUP_LOCATOR}    Add Role
 
-Add role successfully
+App should show message about role was saved successfully
     ${msg}=    Get toast message content
     Wait Until Keyword Succeeds
     ...    ${RETRY}
@@ -69,8 +77,38 @@ Add role successfully
     ...    Should Contain    ${msg}    ${ROLE_CREATED_SUCCESSFULLY_MSG}
 
 Delete role
-    [Arguments]    ${name}
+    [Arguments]    ${role_name}
+    Select option from action menu    ${role_name}    Delete
+    Click on OK button of Confirmation Dialog
+
+Click on dropdown item value
+    [Arguments]    ${value}
+    Click desired text from list    ${ACTION_MENU_OPTION_ELEMENT}    ${value}
+
+Select option from action menu
+    [Arguments]    ${row_value}    ${option}
     ${table_rows}=    Set Variable    css:tbody>tr
-    ${row}=    Get element by text    ${name}
-    ${locator}=    Get Element Attribute    ${row}    css
-    Log    ${locator}
+    Wait Until Page Contains Element    ${table_rows}
+    @{rows}=    Get WebElements    ${table_rows}
+    ${menu_items}=    Get WebElements    ${ACTION_MENU_LIST_ELEMENT}
+    ${i}=    Set Variable    0
+    FOR    ${element}    IN    @{rows}
+        ${is_contains}=    Run Keyword And Return Status    Element Should Contain    ${element}    ${row_value}
+        IF    "${is_contains}" == "True"
+            Scroll to element    ${element}
+            ${menu}=    Set Variable    ${menu_items}[${i}]
+            Click on the web element    ${menu}
+            Click on dropdown item value    ${option}
+            RETURN
+        ELSE
+            ${i}=    Evaluate    ${i} + 1
+            Log    Not found
+        END
+    END
+
+Scroll to element
+    [Arguments]    ${element}
+    Wait Until Keyword Succeeds
+    ...    ${RETRY}
+    ...    ${INTERVAL}
+    ...    Run Keyword And Ignore Error    Scroll Element Into View    ${element}
