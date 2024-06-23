@@ -1,6 +1,8 @@
 *** Settings ***
 Resource    ../../configurations/config.resource
+Resource    ../pageObjects/multipleSelectPanel.resource
 
+Library    Process
 
 *** Variables ***
 ${URL_EMPLOYEE}                         /app/employee/list
@@ -10,6 +12,7 @@ ${EMPLOYEE_ID_SEARCHBOX_ELEMENT1}       css=label:contains('Employee ID')
 ${EMPLOYEE_ID_SEARCHBOX_ELEMENT}        css=label:contains('Employee ID') ~ formly-field-input input
 ${ACTION_MENU_ELEMENT}                  css=Button.dropdown-toggle
 ${FIRST_ROW_ELEMENT}                    CSS=tbody tr
+${DEPARTMENT_ID_LOCATOR}                departments
 
 
 *** Keywords ***
@@ -21,8 +24,8 @@ Click Add Employee button
 Click Search button
     Click Button    Search
 
-Input text to ${field} with ${value}
-    Input Text    css=[ng-reflect-label='${field}'] input    ${value}
+# Input text to ${field} with ${value}
+#    Input Text    css=[ng-reflect-label='${field}'] input    ${value}
 
 Click on "${action}" option on Action menu
     [Arguments]    ${Email}
@@ -73,11 +76,31 @@ Employees page should be opened
     Wait Until Page Contains Element    ${PAGE_TITLE_ELEMENT}
     Element Should Contain    ${PAGE_TITLE_ELEMENT}    Employees
 
+Get text field by label
+    [Arguments]    ${expected_label}
+    @{list_label}=    Get WebElements    css=label.form-label
+    ${index}=    Set Variable    0
+    FOR    ${element}    IN    @{list_label}
+        ${lable}=    Get Text    ${element}
+        IF    '${lable}'=='${expected_label}'
+            ${input_fields}=    Get WebElements    css:formly-field-input input
+            ${input_field}=    Get WebElement    ${input_fields}[${index}]
+            RETURN    ${input_field}
+        END    
+        ${index}=    Evaluate    ${index} + 1
+    END
+
 Search by "${field}"
     [Arguments]    ${value}
+    ${field}=    Get text field by label    ${field}
     Input text to ${field} with ${value}
     Click Search button
 
 Get Search box by label
     [Arguments]    ${label}
-    ${Searchbox}=    Get WebElement    css=[ng-reflect-label='${label}'] input
+    ${Searchbox}=    Get Element by locator    css=[ng-reflect-label='${label}'] input
+
+Select Department name
+    [Arguments]    ${name}
+    ${LOCATOR}=    Get Element by locator    ${DEPARTMENT_ID_LOCATOR}
+    Select option in dropdown menu    ${LOCATOR}    ${name}

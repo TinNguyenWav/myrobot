@@ -1,6 +1,5 @@
-*** Settings ***
-Resource    ../../configurations/config.robot
+# *** Settings ***
+# Resource    ../../configurations/config.robot
 
-
-*** Variables ***
-${SIDEBAR_sel}      css=frontend-sidebar
+# *** Variables ***
+# ${SIDEBAR_sel}    css=frontend-sidebar
