@@ -2,6 +2,7 @@
 Resource    ../../configurations/config.resource
 Resource    ../pageObjects/multipleSelectPanel.resource
 
+Library    Process
 
 *** Variables ***
 ${URL_EMPLOYEE}                         /app/employee/list
@@ -75,8 +76,23 @@ Employees page should be opened
     Wait Until Page Contains Element    ${PAGE_TITLE_ELEMENT}
     Element Should Contain    ${PAGE_TITLE_ELEMENT}    Employees
 
+Get text field by label
+    [Arguments]    ${expected_label}
+    @{list_label}=    Get WebElements    css=label.form-label
+    ${index}=    Set Variable    0
+    FOR    ${element}    IN    @{list_label}
+        ${lable}=    Get Text    ${element}
+        IF    '${lable}'=='${expected_label}'
+            ${input_fields}=    Get WebElements    css:formly-field-input input
+            ${input_field}=    Get WebElement    ${input_fields}[${index}]
+            RETURN    ${input_field}
+        END    
+        ${index}=    Evaluate    ${index} + 1
+    END
+
 Search by "${field}"
     [Arguments]    ${value}
+    ${field}=    Get text field by label    ${field}
     Input text to ${field} with ${value}
     Click Search button
 

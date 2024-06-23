@@ -28,7 +28,7 @@ GH-T128 --- Verify that admin user can search Employee profile by Email
 GH-T127 --- Verify that admin user can search Employee profile by employee name
     Login system with admin user account
     Access Employees page
-    Employees page should be opened
+    # Employees page should be opened
     Search by "Employee Name"    user00006 Nguyen
     Page Should Contain    user00006 Nguyen
 
