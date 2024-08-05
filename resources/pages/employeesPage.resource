@@ -63,6 +63,9 @@ Click on Employee name "${employeeName}"
     Wait Until Element Contains    ${FIRST_ROW_ELEMENT}    ${employeeName}
     Click Element    link=${employeeName}
 
+Select an employee account
+    ${employee_name}=    Get WebElement    css=tbody[class="p-element p-datatable-tbody"]>tr:first-child>td:nth-child(3)>a:nth-child(2)
+    Click on the web element    ${employee_name}
 ### Behavior ###
 
 Access Employees page
