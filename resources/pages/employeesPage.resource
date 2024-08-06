@@ -71,6 +71,7 @@ Access Employees page
     Employees page should be opened
 
 Employees page should be opened
+    Wait Until Page Contains    Administration
     ${current URL}=    Get Location
     Should Contain    ${current URL}    ${URL_EMPLOYEE}
     Wait Until Page Contains Element    ${PAGE_TITLE_ELEMENT}
@@ -104,3 +105,12 @@ Select Department name
     [Arguments]    ${name}
     ${LOCATOR}=    Get Element by locator    ${DEPARTMENT_ID_LOCATOR}
     Select option in dropdown menu    ${LOCATOR}    ${name}
+
+Click an employee with name Fresher Dev Nguyen
+    TRY
+        Click on the web element    css:[href="/app/employee-profile/2d62433e-f36b-1410-8de0-00e198c9d750"]
+    EXCEPT    
+        Run Keyword And Continue On Failure    Fail     There is a error happen in process Click an employee with name Fresher Dev Nguyen
+    END
+
+
