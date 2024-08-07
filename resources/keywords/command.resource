@@ -17,7 +17,7 @@ Get element by partial id
     ${element}=    Wait Until Keyword Succeeds
     ...    ${RETRY}
     ...    ${INTERVAL}
-    ...    Get WebElement    css: [id*='${id}']
+    ...    Get WebElement    css=[id*='${id}']
     RETURN    ${element}
 
 Get element by text
