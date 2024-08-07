@@ -30,3 +30,12 @@ Open the Insurances tab
 # ------------EXPECTED RESULT-----------
 The Contract tab should appear
     Expect webelement contains text    ${CONTRACTSTAB_TITLE_ELE}    Contract Information
+All contracts of employees should manager on the Contract card
+    ${contract_list}=    Get WebElements    css=div[class="experience-box"]>ul[class="experience-list"]>li[class="ng-star-inserted"]
+    ${contract_list_length}=    Get Length    ${contract_list}
+    Pass Execution If    ${contract_list_length} > 0    Success
+All employee contract should be showed on Contract Information card
+    Expect webelement contains text    ${CONTRACTSTAB_TITLE_ELE}    Contract Information
+    ${contract_list}=    Get WebElements    css=div[class="experience-box"]>ul[class="experience-list"]>li[class="ng-star-inserted"]
+    ${contract_list_length}=    Get Length    ${contract_list}
+    Pass Execution If    ${contract_list_length} > 0    Success
