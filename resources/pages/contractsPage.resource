@@ -45,3 +45,7 @@ Upload field for Upload File field
     Choose File    ${UPLOAD_FILE_FIELD_ELE}    ${file_path}
 
 # ------------BEHAVIOR------------
+# ------------EXPECTED------------
+The error message shouldn't be display below the Valid To field
+    ${stt}    Run Keyword And Return Status    Page Should Not Contain    Valid To must be equal or greater than Valid From
+    Pass Execution If    "${stt}"==True    Success
