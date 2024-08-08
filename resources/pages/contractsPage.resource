@@ -45,7 +45,21 @@ Upload field for Upload File field
     Choose File    ${UPLOAD_FILE_FIELD_ELE}    ${file_path}
 
 # ------------BEHAVIOR------------
+Enter all required field
+    Select a option for the Contract Type dropdown field    Probation
+    ${value}    Get Current Date    result_format=%H%M%S
+    Sleep    2
+    Input text to ${CONTRACT_NUMBER_FIELD_ELE} with ${value}
+    Input value for the Valid From field    08/07/2024
+    Set Global Variable    ${value}
 # ------------EXPECTED------------
 The error message shouldn't be display below the Valid To field
     ${stt}    Run Keyword And Return Status    Page Should Not Contain    Valid To must be equal or greater than Valid From
+    Pass Execution If    "${stt}"==True    Success
+The warning message " Valid To must be equal or greater than Valid From" should be display below the Valid To field
+    ${stt}    Run Keyword And Return Status    Page Should Contain    Valid To must be equal or greater than Valid From
+    Pass Execution If    "${stt}"==True    Success
+The system should showed as Present on Contract Information card
+    ${present_value_txt}=    Get Text    css=ul[class="experience-list"]>li div[class="timeline-content"]>a[title*="${value}"]+div[class="text-ellipsis"]    
+    ${stt}    Run Keyword And Return Status    Should Contain    ${present_value_txt}    Present
     Pass Execution If    "${stt}"==True    Success
