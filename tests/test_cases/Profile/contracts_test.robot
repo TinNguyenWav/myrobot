@@ -55,4 +55,16 @@ GH-T57 --- Verify that value of Valid To must be equal value of Valid From when 
     Input value for the Valid From field    08/07/2024
     Input value for the Valid To field    08/07/2024
     The error message shouldn't be display below the Valid To field
+GH-T553 --- Verify that value of Valid To must be greater than Valid From when adding new Contract
+    [Tags]    Normal
+    Login system with admin user account
+    Access Employees page
+    Select an employee account
+    Open the Contracts tab
+    Click on the Add Contract button
+    Select a option for the Contract Type dropdown field    One year
+    Input value for the Contract Number field
+    Input value for the Valid From field    08/07/2024
+    Input value for the Valid To field    08/09/2024
+    The error message shouldn't be display below the Valid To field
 
