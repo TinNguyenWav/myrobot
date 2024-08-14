@@ -112,3 +112,6 @@ Search and Replace double quotes by single quote
 # Scroll Element Into View
 #    [Arguments]    ${element}
 #    Execute Javascript    arguments[0].scrollIntoView(true);    ${element}
+Get current time
+    ${current_date}=    Get Current Date    result_format=%m/%d/%Y
+    RETURN    ${current_date}
