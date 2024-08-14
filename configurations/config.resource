@@ -5,7 +5,7 @@ Library             String
 Library             Collections
 Library             OperatingSystem
 Library             SeleniumLibrary
-
+Library             BuiltIn
 
 *** Variables ***
 # Server and domain info
