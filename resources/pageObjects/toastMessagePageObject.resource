@@ -11,6 +11,7 @@ ${ROLE_CREATED_SUCCESSFULLY_MSG}    Permission group was saved successfully
 
 *** Keywords ***
 Get toast message content
+    Wait Until Page Contains Element    ${TOAST_BODY_SELECTOR}
     ${element}=    Get Element by locator    ${TOAST_BODY_SELECTOR}
     ${msg_content}=    Wait Until Keyword Succeeds
     ...    ${RETRY}

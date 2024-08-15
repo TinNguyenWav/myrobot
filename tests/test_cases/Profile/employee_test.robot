@@ -13,12 +13,13 @@ Test Teardown       Test case Teardown
 *** Test Cases ***
 GH-T125 --- Verify that admin user can access Employee page
     [Documentation]    This is some basic info about test
-    [Tags]    smoke
+    [Tags]    smoke    core
     Login system with admin user account
     Access Employees page
     Employees page should be opened
 
 GH-T128 --- Verify that admin user can search Employee profile by Email
+    [Tags]    smoke    core
     Login system with admin user account
     Access Employees page
     Employees page should be opened
@@ -26,6 +27,7 @@ GH-T128 --- Verify that admin user can search Employee profile by Email
     Page Should Contain    User00012 Nguyen
 
 GH-T127 --- Verify that admin user can search Employee profile by employee name
+    [Tags]    smoke    core
     Login system with admin user account
     Access Employees page
     Employees page should be opened
@@ -33,6 +35,7 @@ GH-T127 --- Verify that admin user can search Employee profile by employee name
     Page Should Contain    user00006 Nguyen
 
 GH-T17 --- Verify that admin user can search Employee profile by Employee ID
+    [Tags]    core
     Login system with admin user account
     Access Employees page
     Employees page should be opened
