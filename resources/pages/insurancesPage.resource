@@ -9,14 +9,14 @@ ${INSURANCE_ITEM}           css:.table-row
 ${TABLE_ROWS}               css:.p-element.p-datatable-tbody tr
 ${INSURANCETYPE}            css:.w-100.p-dropdown.p-component.p-dropdown-clearable
 ${LABLE_FORM_ELE}           css:.form-label.ng-star-inserted
-${INPUT_FIELD_ELE}          css:.p-inputtext.p-component.p-element.form-control.input-control.ng-untouched.ng-pristine.ng-valid
+${INPUT_FIELD_ELE}          css:.p-inputtext
 ${ADDBUTTON_BTN_ELE}        css:.d-flex.insurance-container .edit-icon
 ${DATE_FIELD_ELE}           css:.form-control.p-inputtext.p-component.ng-star-inserted
 ${SUBMIT_BTN_ELE}           css:.submit-section
 ${ADD_INSURANCE_POPUP}      css:.modal-content
 ${EDIT_INSURANCE_POPUP}     css:.modal-header
 ${MENU_OPTION}              css:.material-icons
-${EDIT_OPTION}              css:.dropdown-item.ng-star-inserted
+${OPTIONS}                  css:.dropdown-item.ng-star-inserted
 *** Keywords ***
 The Insurances page should be opened 
     TRY
@@ -77,12 +77,12 @@ Input '${VALUE}' in the '${NAME}' field
             IF    ('${NAME}'in'${TEXT}')
                 @{LIST_ELE}=    Get list WebElements    ${INPUT_FIELD_ELE}
                 IF    ('${NAME}'in'Issued By')
-                    ${locator}=    Get From List    ${LIST_ELE}    0
+                    ${locator}=    Get From List    ${LIST_ELE}    4
                     Click on the web element    ${locator}
                     Input text to ${locator} with ${VALUE}
                     Exit For Loop
                 ELSE
-                    ${locator}=    Get From List    ${LIST_ELE}    0
+                    ${locator}=    Get From List    ${LIST_ELE}    1
                     Click on the web element    ${locator}
                     Input text to ${locator} with ${VALUE}
                     Exit For Loop
@@ -140,10 +140,11 @@ Select sort option with 'Valid From' field
     END
 The list should be sort by From
     [Arguments]    ${FROM}
+    Sleep    3s
     TRY
         @{COLUMNS}=    Get list WebElements    css:.p-datatable-thead tr th
-        ${INDEX}=    Set Variable    0
-        ${ROW_INDEX}=    Set Variable    0
+        ${INDEX}=    Set Variable    1
+        ${ROW_INDEX}=    Set Variable    1
         FOR    ${COLUMN}    IN    @{COLUMNS}
                 ${TEXT}=    Get Text    ${COLUMN}
             IF    ('${TEXT}'=='Valid From')
@@ -153,18 +154,10 @@ The list should be sort by From
         END
         @{ROWS}=    Get list WebElements    ${TABLE_ROWS}
         FOR    ${ROW}    IN    @{ROWS}
-            ${parent}=    Get WebElements    ${TABLE_ROWS}
-            # ${index_base}=    Get WebElement    ${parent}[${ROW_INDEX}]
-            
-            ${locator_row}=    Set Variable    ${parent}[${ROW_INDEX}]
-            
-
-            
-
-            ${child}=    Get WebElements    css=${locator_row} tr td
-            ${textdata} =    Get Text     ${child}[${INDEX}]
-            Log    ${textdata}
-
+            ${locator_row}=    Set Variable    css=tbody tr:nth-child(${ROW_INDEX}) td:nth-child(${INDEX})
+            ${textdata} =    Get Text     ${locator_row}
+            Should Be Equal    ${textdata}    ${FROM}
+            Exit For Loop
             ${ROW_INDEX}=    Evaluate    ${ROW_INDEX}+1
         END
     EXCEPT    
@@ -189,6 +182,8 @@ Click on the Edit button on the a Insurance
         FOR    ${element}    IN    @{LIST}
             Mouse Over    ${element}
             Click on the web element    ${MENU_OPTION}
+            ${LIST_OPTION}=    Get list WebElements    ${OPTIONS}
+            ${EDIT_OPTION}=    Get From List    ${LIST_OPTION}   0
             Click on the web element    ${EDIT_OPTION}
             Exit For Loop
         END
@@ -204,13 +199,13 @@ Update '${VALUE}' in the '${NAME}' field
             IF    ('${NAME}'in'${TEXT}')
                 @{LIST_ELE}=    Get list WebElements    ${INPUT_FIELD_ELE}
                 IF    ('${NAME}'in'Issued By')
-                    ${locator}=    Get From List    ${LIST_ELE}    0
+                    ${locator}=    Get From List    ${LIST_ELE}    4
                     Click on the web element    ${locator}
                     Clear Element Text    ${locator}
                     Input text to ${locator} with ${VALUE}
                     Exit For Loop
                 ELSE
-                    ${locator}=    Get From List    ${LIST_ELE}    0
+                    ${locator}=    Get From List    ${LIST_ELE}    1
                     Click on the web element    ${locator}
                     
                     Input text to ${locator} with ${VALUE}
@@ -220,4 +215,82 @@ Update '${VALUE}' in the '${NAME}' field
         END
     EXCEPT   
         Run Keyword And Continue On Failure    Fail     There is a error happen in process update '${VALUE}' in the '${NAME}' field
+    END
+The data should be new data
+    [Arguments]    ${data}
+    Sleep    3s
+    TRY
+        @{COLUMNS}=    Get list WebElements    css:.p-datatable-thead tr th
+        ${INDEX}=    Set Variable    1
+        ${ROW_INDEX}=    Set Variable    1
+        FOR    ${COLUMN}    IN    @{COLUMNS}
+                ${TEXT}=    Get Text    ${COLUMN}
+            IF    ('${TEXT}'=='Issued By')
+                Exit For Loop
+            END
+            ${INDEX}=    Evaluate    ${INDEX}+1
+        END
+        @{ROWS}=    Get list WebElements    ${TABLE_ROWS}
+        FOR    ${ROW}    IN    @{ROWS}
+            ${locator_row}=    Set Variable    css=tbody tr:nth-child(${ROW_INDEX}) td:nth-child(${INDEX})
+            ${textdata} =    Get Text     ${locator_row}
+            Should Be Equal    ${textdata}    ${data}
+            Exit For Loop
+            ${ROW_INDEX}=    Evaluate    ${ROW_INDEX}+1
+        END
+    EXCEPT    
+        Run Keyword And Continue On Failure    Fail     There is a error happen in process The data should be new data
+    END
+Click on the Delete button on the a Insurance
+    TRY
+        ${COUNT_BEFORE}=    The quantity insurance of employee
+        Set Global Variable    ${COUNT_BEFORE}
+        @{LIST}=    Get list WebElements    ${TABLE_ROWS}  
+        FOR    ${element}    IN    @{LIST}
+            Mouse Over    ${element}
+            Click on the web element    ${MENU_OPTION}
+            ${LIST_OPTION}=    Get list WebElements    ${OPTIONS}
+            ${DELETE_OPTION}=    Get From List    ${LIST_OPTION}   1
+            Click on the web element    ${DELETE_OPTION}
+            Exit For Loop
+        END
+    EXCEPT    
+        Run Keyword And Continue On Failure    Fail     There is a error happen in process Click on the Delete button on the a Insurance
+    END
+Click on the OK button on the a Confirmation dialog
+    TRY
+        @{LIST}=    Get list WebElements    ${TABLE_ROWS}  
+        FOR    ${element}    IN    @{LIST}
+            Mouse Over    ${element}
+            Click on the web element    ${MENU_OPTION}
+            Click on the web element    css:.btn.btn-primary
+            Exit For Loop
+        END
+    EXCEPT    
+        Run Keyword And Continue On Failure    Fail     There is a error happen in process Click on the OK button on the a Confirmation dialog
+    END
+The quantity insurance of employee 
+    TRY
+        @{LIST}=    Get list WebElements    ${INSURANCE_ITEM}  
+        ${COUNT}=    Set Variable    0
+        FOR    ${element}    IN    @{LIST}
+            IF    ('${element}'!='')
+                ${COUNT}=    Evaluate    ${COUNT}+1
+            END
+        END
+        ${COUNT}=    Convert To String    ${COUNT}
+        RETURN    ${COUNT}
+    EXCEPT   
+        Run Keyword And Continue On Failure    Fail     There is a error happen in process The quantity insurance of employee 
+    END
+
+The insurance should be no display 
+    TRY
+        Sleep    2s
+        ${COUNT_AFTER}=    The quantity insurance of employee
+        ${SUM}  Evaluate   ${COUNT_BEFORE} -   ${COUNT_AFTER}
+        ${SUM}=    Convert To String    ${SUM}
+        Should Be Equal    ${SUM}    1
+    EXCEPT    
+         Run Keyword And Continue On Failure    Fail     There is a error happen in process The insurance should be no display 
     END
