@@ -118,7 +118,8 @@ Input text to text field
     ...    Input Text    ${element}    ${text}
 
 Input text to ${field} with ${value}
-    Input Text    css=[ng-reflect-label='${field}'] input    ${value}
+    # Input Text    css=[ng-reflect-label='${field}'] input    ${value}
+    Input Text    ${field}    ${value}
 
 Select option in dropdown menu
     [Documentation]    Select certain dropdown option by the provided locator and option value

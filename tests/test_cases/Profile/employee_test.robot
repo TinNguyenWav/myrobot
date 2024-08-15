@@ -30,7 +30,7 @@ GH-T127 --- Verify that admin user can search Employee profile by employee name
     [Tags]    smoke    core
     Login system with admin user account
     Access Employees page
-    Employees page should be opened
+    # Employees page should be opened
     Search by "Employee Name"    user00006 Nguyen
     Page Should Contain    user00006 Nguyen
 
@@ -41,3 +41,6 @@ GH-T17 --- Verify that admin user can search Employee profile by Employee ID
     Employees page should be opened
     Search by "Employee ID"    VNE00006
     Page Should Contain    VNE00006
+
+
+    
