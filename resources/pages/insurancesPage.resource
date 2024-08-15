@@ -143,6 +143,7 @@ The list should be sort by From
     TRY
         @{COLUMNS}=    Get list WebElements    css:.p-datatable-thead tr th
         ${INDEX}=    Set Variable    0
+        ${ROW_INDEX}=    Set Variable    0
         FOR    ${COLUMN}    IN    @{COLUMNS}
                 ${TEXT}=    Get Text    ${COLUMN}
             IF    ('${TEXT}'=='Valid From')
@@ -152,11 +153,19 @@ The list should be sort by From
         END
         @{ROWS}=    Get list WebElements    ${TABLE_ROWS}
         FOR    ${ROW}    IN    @{ROWS}
-            ${child}=    Get Element Attribute    ${ROW}    td
-            ${textdata} =    Get Text    ${TABLE_ROWS}[${INDEX}]
+            ${parent}=    Get WebElements    ${TABLE_ROWS}
+            # ${index_base}=    Get WebElement    ${parent}[${ROW_INDEX}]
+            
+            ${locator_row}=    Set Variable    ${parent}[${ROW_INDEX}]
+            
+
+            
+
+            ${child}=    Get WebElements    css=${locator_row} tr td
+            ${textdata} =    Get Text     ${child}[${INDEX}]
             Log    ${textdata}
 
-
+            ${ROW_INDEX}=    Evaluate    ${ROW_INDEX}+1
         END
     EXCEPT    
         Run Keyword And Continue On Failure    Fail     There is a error happen in process The list should be sort by From
