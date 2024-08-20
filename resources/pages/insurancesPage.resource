@@ -9,7 +9,7 @@ ${INSURANCE_ITEM}           css:.table-row
 ${TABLE_ROWS}               css:.p-element.p-datatable-tbody tr
 ${INSURANCETYPE}            css:.w-100.p-dropdown.p-component.p-dropdown-clearable
 ${LABLE_FORM_ELE}           css:.form-label.ng-star-inserted
-${INPUT_FIELD_ELE}          css:.p-inputtext
+${INPUT_FIELD_ELE}          css:.p-inputtext.p-component
 ${ADDBUTTON_BTN_ELE}        css:.d-flex.insurance-container .edit-icon
 ${DATE_FIELD_ELE}           css:.form-control.p-inputtext.p-component.ng-star-inserted
 ${SUBMIT_BTN_ELE}           css:.submit-section
@@ -77,12 +77,12 @@ Input '${VALUE}' in the '${NAME}' field
             IF    ('${NAME}'in'${TEXT}')
                 @{LIST_ELE}=    Get list WebElements    ${INPUT_FIELD_ELE}
                 IF    ('${NAME}'in'Issued By')
-                    ${locator}=    Get From List    ${LIST_ELE}    4
+                    ${locator}=    Get From List    ${LIST_ELE}    3
                     Click on the web element    ${locator}
                     Input text to ${locator} with ${VALUE}
                     Exit For Loop
                 ELSE
-                    ${locator}=    Get From List    ${LIST_ELE}    1
+                    ${locator}=    Get From List    ${LIST_ELE}    0
                     Click on the web element    ${locator}
                     Input text to ${locator} with ${VALUE}
                     Exit For Loop
@@ -165,13 +165,13 @@ The list should be sort by From
     END
 Hover-over the download icon
     TRY
-        Mouse Over    css:a[href="https://api-uat.wsvhrm.com/api/AssetFile/load/cd38453e-f36b-1410-8dec-00e198c9d750"]
+        Mouse Over    css:a[title="3.-Mot-so-goi-y-lien-quan-viec-chuan-bi-cac-minh-chung (1) (7) (1).docx"]
     EXCEPT    
         Run Keyword And Continue On Failure    Fail     There is a error happen in process Hover-over the download icon
     END
 Click on the the download icon
     TRY
-        Click on the web element    css:a[href="https://api-uat.wsvhrm.com/api/AssetFile/load/cd38453e-f36b-1410-8dec-00e198c9d750"]
+        Click on the web element    css:a[title="3.-Mot-so-goi-y-lien-quan-viec-chuan-bi-cac-minh-chung (1) (7) (1).docx"]
     EXCEPT    
         Run Keyword And Continue On Failure    Fail     There is a error happen in process Click on the the download icon
     END
@@ -199,13 +199,13 @@ Update '${VALUE}' in the '${NAME}' field
             IF    ('${NAME}'in'${TEXT}')
                 @{LIST_ELE}=    Get list WebElements    ${INPUT_FIELD_ELE}
                 IF    ('${NAME}'in'Issued By')
-                    ${locator}=    Get From List    ${LIST_ELE}    4
+                    ${locator}=    Get From List    ${LIST_ELE}    3
                     Click on the web element    ${locator}
                     Clear Element Text    ${locator}
                     Input text to ${locator} with ${VALUE}
                     Exit For Loop
                 ELSE
-                    ${locator}=    Get From List    ${LIST_ELE}    1
+                    ${locator}=    Get From List    ${LIST_ELE}    0
                     Click on the web element    ${locator}
                     
                     Input text to ${locator} with ${VALUE}
@@ -288,9 +288,29 @@ The insurance should be no display
     TRY
         Sleep    2s
         ${COUNT_AFTER}=    The quantity insurance of employee
-        ${SUM}  Evaluate   ${COUNT_BEFORE} -   ${COUNT_AFTER}
+        ${SUM}  Evaluate   ${COUNT_BEFORE}-${COUNT_AFTER}
         ${SUM}=    Convert To String    ${SUM}
         Should Be Equal    ${SUM}    1
     EXCEPT    
          Run Keyword And Continue On Failure    Fail     There is a error happen in process The insurance should be no display 
     END
+Create Insurances No.
+    [Documentation]       This keyword is used to Create Email
+    TRY
+        ${current_hour}=    Get Current Date    result_format=%H
+        ${current_minute}=  Get Current Date    result_format=%M
+        ${current_second}=  Get Current Date    result_format=%S
+        ${unique_insurance}=    Set Variable   ${current_hour}${current_minute}${current_second}
+        RETURN    ${unique_insurance}
+    EXCEPT    
+        Run Keyword And Continue On Failure    Fail    There is a error happen in process create Insurances No.   
+    END 
+    
+Input on the "Insurance No." field with value created automatic
+    TRY
+        ${Insurances No.}=    Create Insurances No.
+        Input '${Insurances No.}' in the 'Insurance No.' field
+    EXCEPT    
+        Run Keyword And Continue On Failure   FAIL    There is a error happen in process Input on the "Insurance No." field with value created automatic   
+    END
+
