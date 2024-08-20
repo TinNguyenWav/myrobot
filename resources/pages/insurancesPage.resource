@@ -17,6 +17,7 @@ ${ADD_INSURANCE_POPUP}      css:.modal-content
 ${EDIT_INSURANCE_POPUP}     css:.modal-header
 ${MENU_OPTION}              css:.material-icons
 ${OPTIONS}                  css:.dropdown-item.ng-star-inserted
+${DOWLOAD_FILE}             css:a[title="3.-Mot-so-goi-y-lien-quan-viec-chuan-bi-cac-minh-chung (1) (7) (1).docx"]
 *** Keywords ***
 The Insurances page should be opened 
     TRY
@@ -165,13 +166,13 @@ The list should be sort by From
     END
 Hover-over the download icon
     TRY
-        Mouse Over    css:a[title="3.-Mot-so-goi-y-lien-quan-viec-chuan-bi-cac-minh-chung (1) (7) (1).docx"]
+        Mouse Over    ${DOWLOAD_FILE} 
     EXCEPT    
         Run Keyword And Continue On Failure    Fail     There is a error happen in process Hover-over the download icon
     END
 Click on the the download icon
     TRY
-        Click on the web element    css:a[title="3.-Mot-so-goi-y-lien-quan-viec-chuan-bi-cac-minh-chung (1) (7) (1).docx"]
+        Click on the web element    ${DOWLOAD_FILE} 
     EXCEPT    
         Run Keyword And Continue On Failure    Fail     There is a error happen in process Click on the the download icon
     END
