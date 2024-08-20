@@ -17,7 +17,7 @@ Get element by partial id
     ${element}=    Wait Until Keyword Succeeds
     ...    ${RETRY}
     ...    ${INTERVAL}
-    ...    Get WebElement    css: [id*='${id}']
+    ...    Get WebElement    css=[id*='${id}']
     RETURN    ${element}
 
 Get element by text
@@ -130,6 +130,17 @@ Select option in dropdown menu
     ...    Click Element    ${locator}
     Search and select option    ${expected_item_text}
 
+Get list WebElements
+    [Documentation]    This keyword is used to get list web elements from the provided locator
+    [Arguments]    ${locator}
+    TRY
+        Wait Until Element Is Visible    ${locator}
+        @{elements}=    Get WebElements    ${locator}
+        RETURN     @{elements}
+    EXCEPT    
+        Run Keyword And Continue On Failure    Fail    Couldn't get list web elements
+    END
+
 # ------------------- ASSERTIONS -------------------#
 
 Expect webelement contains text
@@ -160,7 +171,7 @@ Is web element
 
 # ------------------- CUSTOM WAIT -------------------#
 
-Wait until element is Visible
+Is element Visible
     [Arguments]    ${locator}
     Wait Until Keyword Succeeds
     ...    ${RETRY}

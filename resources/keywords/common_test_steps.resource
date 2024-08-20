@@ -3,7 +3,7 @@ Resource    ../../resources/pages/loginPage.resource
 Resource    ../../resources/pages/homePage.resource
 Resource    ../../resources/pageObjects/hearderPageObject.resource
 Resource    ./zephyr_scale_integrate.resource
-
+Resource    ../keywords/command.resource
 
 *** Keywords ***
 Login system with admin user account
