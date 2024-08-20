@@ -7,7 +7,13 @@ Resource            ../../../resources/keywords/zephyr_scale_integrate.resource
 Resource            ../../../resources/keywords/utils.resource
 Resource            ../../../resources/pages/loginPage.resource
 Resource            ../../../resources/pages/employeesPage.resource
-Suite Setup    
+
+Suite Setup         Test Suite Setup
+Test Setup          Test case Setup
+Test Teardown       Test case Teardown
+
+
+
 *** Test Cases ***
 GH-T51 --- Verify that there is a page for managing all employee contracts page
     [Tags]    High
@@ -40,7 +46,7 @@ GH-T54 --- Verify that user can add new contract by clicking on (+) button on Co
     Select a option for the Contract Type dropdown field    One year
     Input value for the Contract Number field
     Input value for the Valid From field
-    Input value for the Valid To field    08/07/2025
+    Input value for the Valid To field
     Click on the Submit button at the Contract
     The contract should be added success
 GH-T57 --- Verify that value of Valid To must be equal value of Valid From when adding new Contract
@@ -55,7 +61,6 @@ GH-T57 --- Verify that value of Valid To must be equal value of Valid From when 
     Input value for the Valid From field
     Input value for the Valid To field    MM/DD/YYYY
     The error message shouldn't be display below the Valid To field
-######### Have issue that duplicate time of exiting contract ____
 GH-T63 --- Verify that the system will show as Present when the user does not set the Valid To
     [Tags]    High
     Login system with admin user account second
@@ -76,7 +81,7 @@ GH-T66 --- Verify that the user can edit existing contract by clicking on Pencil
     Input value for the Contract Number field
     Click on the Submit button at the Contract
     The contract should be edited success
-Verify that the user can delete existing contract by clicking on delete buton (trash icon) next to the contract name.
+GH-T67 --- Verify that the user can delete existing contract by clicking on delete buton (trash icon) next to the contract name.
     [Tags]    High
     Login system with admin user account second
     Access Employees page
@@ -93,7 +98,7 @@ GH-T552 --- Verify that the Valid To field should appear error message when valu
     Open the Contracts tab
     Click on the Add Contract button
     Input value for the Valid From field
-    Input value for the Valid To field    08/06/2024
+    Input value for the Valid To field
     The warning message " Valid To must be equal or greater than Valid From" should be display below the Valid To field
 
 GH-T553 --- Verify that value of Valid To must be greater than Valid From when adding new Contract
@@ -104,7 +109,7 @@ GH-T553 --- Verify that value of Valid To must be greater than Valid From when a
     Open the Contracts tab
     Click on the Add Contract button
     Input value for the Valid From field
-    Input value for the Valid To field    08/09/2024
+    Input value for the Valid To field    MM/DD/YYYY
     The error message shouldn't be display below the Valid To field
 
 

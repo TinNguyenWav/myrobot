@@ -17,6 +17,9 @@ ${SEARCH_IP_ELE}    css=input[class="p-dropdown-filter p-inputtext p-component"]
 ${CONTRACT_LIST_ELE}    css=ul[class="experience-list"]>li
 ${ADD_CONTRACT_TITLE}    xpath=//h4[contains(text(), 'Add Contract')]
 ${OK_BTN_ELE}    xpath=//button[contains(@type,"button") and text()='OK']
+${REMOVEDSUCCESS_MESSAGE_ELE}    xpath=//div[contains(@class,"toast-body") and text()='Remove Contract Successfully']
+${ADDSUCCESS_MESSAGE_ELE}    xpath=//div[contains(@class,'toast-body') and text()='Contract was Created successfully']
+${EDITSUCCESS_MESSAGE_ELE}    xpath=//div[contains(@class,'toast-body') and text()='Contract was Updated successfully']
 *** Keywords ***
 # ------------ACTION--------------
 Click on the Add Contract button
@@ -33,6 +36,7 @@ Click on the Submit button at the Contract
         Click Element    ${SUBMIT_BTN_ELE}
         ${check}=    Run Keyword And Return Status    Page Should Contain     The contract time is overlapped with existing contract. Still want to save it?
         IF    ${check}
+            Wait Until Element Is Enabled    ${OK_BTN_ELE}
             Click Element    ${OK_BTN_ELE}
         END
 
@@ -54,7 +58,7 @@ Select a option for the Contract Type dropdown field
     TRY
         Click Element    ${CONTRACT_TYPE_FIELD_ELE}
         Input text to ${SEARCH_IP_ELE} with ${option}
-        Sleep    2s
+        Wait Until Element Is Enabled    css=li[aria-label="${option}"]
         Click Element    css=li[aria-label="${option}"]
         
     EXCEPT    
@@ -64,7 +68,7 @@ Select a option for the Contract Type dropdown field
 Input value for the Contract Number field
     TRY
         ${value}    Get Current Date    result_format=%H%M%S%Y%m%d
-        Sleep    2s
+        Wait Until Element Is Enabled    ${CONTRACT_NUMBER_FIELD_ELE}
         Input text to ${CONTRACT_NUMBER_FIELD_ELE} with ${value}
         
     EXCEPT    
@@ -88,31 +92,33 @@ Input value for the Valid From field
 Input value for the Valid To field
     [Arguments]    ${value}=${None}
     TRY
-        IF    ${value} == ${None}
+    ${format_date}=    Set Variable    MM/DD/YYYY
+        IF    "${value}" == None
             ${month_day}=    Get Current Date    result_format=%m/%d
             ${year}=    Get Current Date    result_format=%Y
             ${year}=    Evaluate    ${year}+1
             ${date}=    Set Variable    ${month_day}/${year}
             ${value}=    Set Variable    ${date}
-        ELSE IF    "${value}" == MM/DD/YYYY
+        ELSE IF    "${value}" == "${format_date}"
             ${date}=    Get Current Date    result_format=%m/%d/%Y
             ${value}=    Set Variable    ${date}      
         ELSE 
             ${month}=    Get Current Date    result_format=%m
             ${day}=    Get Current Date    result_format=%d
             ${year}=    Get Current Date    result_format=%Y
-            IF    ${day} <= 31 AND ${day} > 1
+            IF    ${day} > 1 
                 ${day}=    Evaluate    ${day}-1
                 ${date}=    Set Variable    ${month}/${day}/${year}
-            ELSE IF    ${day} == 1 AND ${month} == 12
+            ELSE IF    ${day} == 1 AND ${month} > 1
                 ${day}=    Evaluate    ${day}-1
-                ${month}=    Evaluate    1
+                ${month}=    Evaluate    ${month}-1
                 ${date}=    Set Variable    ${month}/${day}/${year}
-                
+            ELSE IF    ${day} == 1 AND ${month} == 1
+                ${day}=    Evaluate    ${day}-1
+                ${month}=    Evaluate    12
+                ${year}=    Evaluate    ${year}-1
+                ${date}=    Set Variable    ${month}/${day}/${year}
             END
-            ${year}=    Evaluate    ${year}+1
-            ${date}=    Set Variable    ${month_day}/${year}
-            ${value}=    Set Variable    ${date}
                  
         END
         Input text to ${VALID_TO_FIELD_ELD} with ${value}
@@ -131,7 +137,7 @@ Enter all required field
     TRY
         Select a option for the Contract Type dropdown field    Probation
         ${value}    Get Current Date    result_format=%H%M%S%Y%m%d
-        Sleep    2
+        Wait Until Element Is Enabled    ${CONTRACT_NUMBER_FIELD_ELE}
         Input text to ${CONTRACT_NUMBER_FIELD_ELE} with ${value}
         Input value for the Valid From field
         Set Global Variable    ${value}
@@ -142,7 +148,7 @@ Enter all required field
 
 Click on the Pencil icon next to the contract name
     TRY
-        Sleep    1s
+        Wait Until Element Is Enabled    ${CONTRACT_LIST_ELE}
         ${contracts_lst}=    Get WebElements    ${CONTRACT_LIST_ELE}
         ${contracts_lst_length}=    Get Length    ${contracts_lst}
         Run Keyword If    ${contracts_lst_length} > 0
@@ -153,7 +159,7 @@ Click on the Pencil icon next to the contract name
     END
 Click on the Delete button next to the contract name
     TRY
-        Sleep    1s
+        Wait Until Element Is Enabled    ${CONTRACT_LIST_ELE}
         ${contracts_lst}=    Get WebElements    ${CONTRACT_LIST_ELE}
         ${contracts_lst_length}=    Get Length    ${contracts_lst}
         IF    ${contracts_lst_length} > 0
@@ -192,33 +198,33 @@ The warning message " Valid To must be equal or greater than Valid From" should 
 
 The system should showed as Present on Contract Information card
     TRY
+        Wait Until Element Is Enabled    css=ul[class="experience-list"]>li div[class="timeline-content"]>a[title*="${value}"]+div[class="text-ellipsis"]
         ${present_value_txt}=    Get Text    css=ul[class="experience-list"]>li div[class="timeline-content"]>a[title*="${value}"]+div[class="text-ellipsis"]    
         ${stt}    Run Keyword And Return Status    Should Contain    ${present_value_txt}    Present
-        Pass Execution If    "${stt}"==True    Success
-        
+        Pass Execution If    "${stt}"==True    Success    
     EXCEPT    
         Run Keyword And Continue On Failure    Fail    The system did not show as Present on Contract Information card
     END
 
 The contract should be edited success
     TRY
-        Sleep    1s
-        Page Should Contain Element    css=div[class="toast-body"]
-        
+        Wait Until Element Is Enabled    ${EDITSUCCESS_MESSAGE_ELE}
+        Page Should Contain Element    ${EDITSUCCESS_MESSAGE_ELE}        
     EXCEPT    
         Run Keyword And Continue On Failure    Fail    Can not edit the contract
     END
 The contract should be added success
     TRY
-        Sleep    1s
-        Page Should Contain    Contract was Created successfully
+        Wait Until Element Is Enabled    ${ADDSUCCESS_MESSAGE_ELE}
+        Page Should Contain Element    ${ADDSUCCESS_MESSAGE_ELE}
         
     EXCEPT    
         Run Keyword And Continue On Failure    Fail    Can not edit the contract
     END
 The contract should be removed from the list
     TRY
-        Page Should Contain    text
+        Wait Until Element Is Enabled    ${REMOVEDSUCCESS_MESSAGE_ELE}
+        Page Should Contain Element    ${REMOVEDSUCCESS_MESSAGE_ELE}
     EXCEPT
         Run Keyword And Continue On Failure    Fail    Failed to remove the contract
     END
