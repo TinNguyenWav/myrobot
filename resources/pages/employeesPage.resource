@@ -63,6 +63,20 @@ Click on Employee name "${employeeName}"
     Wait Until Element Contains    ${FIRST_ROW_ELEMENT}    ${employeeName}
     Click Element    link=${employeeName}
 
+Select an employee account
+    TRY
+        ${employee_list}=    Get WebElements    css=div[id="pn_id_1"] tbody>tr
+        ${employee_list_length}=    Get Length    ${employee_list}
+        IF    ${employee_list_length} > 0
+            ${employee_name}=    Get WebElement    css=tbody[class="p-element p-datatable-tbody"]>tr:first-child>td:nth-child(3)>a:nth-child(2)
+            Click on the web element    ${employee_name}
+        ELSE
+            Log    Don't have any employee on the Employees page
+        END
+        
+    EXCEPT    message
+        Run Keyword And Continue On Failure    Fail    Can not select employee
+    END
 ### Behavior ###
 
 Access Employees page
