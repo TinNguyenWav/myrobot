@@ -208,7 +208,7 @@ Update '${VALUE}' in the '${NAME}' field
                 ELSE
                     ${locator}=    Get From List    ${LIST_ELE}    0
                     Click on the web element    ${locator}
-                    
+                    Clear Element Text    ${locator}
                     Input text to ${locator} with ${VALUE}
                     Exit For Loop
                 END
@@ -218,7 +218,7 @@ Update '${VALUE}' in the '${NAME}' field
         Run Keyword And Continue On Failure    Fail     There is a error happen in process update '${VALUE}' in the '${NAME}' field
     END
 The data should be new data
-    [Arguments]    ${data}
+    [Arguments]    ${DATA}
     Sleep    3s
     TRY
         @{COLUMNS}=    Get list WebElements    css:.p-datatable-thead tr th
@@ -233,9 +233,9 @@ The data should be new data
         END
         @{ROWS}=    Get list WebElements    ${TABLE_ROWS}
         FOR    ${ROW}    IN    @{ROWS}
-            ${locator_row}=    Set Variable    css=tbody tr:nth-child(${ROW_INDEX}) td:nth-child(${INDEX})
-            ${textdata} =    Get Text     ${locator_row}
-            Should Be Equal    ${textdata}    ${data}
+            ${LOCATOR_ROW}=    Set Variable    css=tbody tr:nth-child(${ROW_INDEX}) td:nth-child(${INDEX})
+            ${TEXTDATA} =    Get Text     ${LOCATOR_ROW}
+            Should Be Equal    ${TEXTDATA}    ${DATA}
             Exit For Loop
             ${ROW_INDEX}=    Evaluate    ${ROW_INDEX}+1
         END
