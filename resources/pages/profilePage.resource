@@ -19,7 +19,7 @@ Select the Project and Report item
 
 Select the Contracts item
     TRY
-        command.Wait until element is Visible    ${CONTRACTSTAB_ELE}
+        Wait Until Element Is Enabled    ${CONTRACTSTAB_ELE}
         Click Element    ${CONTRACTSTAB_ELE}        
     EXCEPT    
         Run Keyword And Continue On Failure    Fail    Can not select the Contracts item

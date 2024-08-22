@@ -75,15 +75,6 @@ Click on Employee name "${employeeName}"
     Wait Until Page Contains    ${Email}
     Wait Until Element Contains    ${FIRST_ROW_ELEMENT}    ${employeeName}
     Click Element    link=${employeeName}
-Click on the Submit button
-    Scroll Element Into View    ${SUBMITADDEMPLOYEE_BTN_ELE}
-    Click Element    ${SUBMITADDEMPLOYEE_BTN_ELE}
-Select an employee account
-    ${employee_name}=    Get WebElement    css=tbody[class="p-element p-datatable-tbody"]>tr:first-child>td:nth-child(3)>a:nth-child(2)
-    Click on the web element    ${employee_name}
-# Input value for the Employee ID field
-#     [Arguments]    ${value}
-#     Input text to ${EMPLOYEE_ID_FIELD_ELE} with ${value}
 Input value for the First Name field
     [Arguments]    ${value}
     Sleep    1s
@@ -141,6 +132,12 @@ Select value for the Location field
 Select the Grant access to System checkbox
     Click Element    css=check-box[id*="check-box-control_grantedAccess_0"]
 
+Click on the Submit button
+    Scroll Element Into View    ${SUBMITADDEMPLOYEE_BTN_ELE}
+    Click Element    ${SUBMITADDEMPLOYEE_BTN_ELE}
+Select an employee account
+    ${employee_name}=    Get WebElement    css=tbody[class="p-element p-datatable-tbody"]>tr:first-child>td:nth-child(3)>a:nth-child(2)
+    Click on the web element    ${employee_name}
 ### Behavior ###
 
 Access Employees page

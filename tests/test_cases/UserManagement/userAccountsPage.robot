@@ -11,7 +11,7 @@ Resource            ../../../resources/pages/employeesPage.resource
 GH-T75 --- Verify that Admin user can create user account by selecting checkbox Grant access to System
     [Tags]    High
     [Setup]    Create data
-    Login system with admin user account
+    Login system with admin user account second
     Access Employees page
     Click Add Employee button
     Input value for the First Name field    Robot
@@ -29,8 +29,13 @@ GH-T75 --- Verify that Admin user can create user account by selecting checkbox 
     The added user account should display on the User Accounts page    ${EMAIL_EMPLOYEE}
 GH-T81 --- Verify that in edit mode, just show grant acess for profile has no Account linked
     [Tags]    High
-    Login system with admin user account
+    Login system with admin user account second
     Access Employees page
     Click on the Action menu of an employee account
     Select the Edit option on the Action menu of an employee account
     The system just should just show grant access for profile has no Account linked
+GH-T107 --- Verify that there is a page for managing all user accounts
+    [Tags]    High
+    Login system with admin user account second
+    Access the User Account page
+    User Accounts page should be opened
