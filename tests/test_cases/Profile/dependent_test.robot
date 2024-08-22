@@ -45,7 +45,7 @@ GH-T31 --- Verify that there’s a page for managing employee Dependents informa
     The Denpendent tab should be display 
     Click on edit icon 'Dependent Information'
     The New Add Dependent popup should be opened
-    Input 'Van A' in the 'Name' field in the Add Dependent popup 
+    Input 'Van Quan' in the 'Name' field in the Add Dependent popup 
     Select Relationship in dropdown with 'Father' option 
     Input '07/09/1982' in the 'Date of Birth' field in the Add Dependent popup
     Input '125897456' in the 'Tax Id No.' field in the Add Dependent popup
@@ -79,6 +79,6 @@ GH-T34 --- Verify that user can edit existing dependent information by selecting
     The Denpendent tab should be display
     Click on the Edit button on the a Dependent
     The Edit Dependent popup should be opened 
-    Update 'Nguyen B' in the 'Name' field in the Add Dependent popup 
+    Update 'Nguyen Van Vinh' in the 'Name' field in the Add Dependent popup 
     Click on the Submit button in the Dependent popup
-    The data should be new data of Dependent    Nguyen B
+    The data should be new data of Dependent    Nguyen Van Vinh

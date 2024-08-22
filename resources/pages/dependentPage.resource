@@ -74,16 +74,19 @@ Input '${VALUE}' in the '${NAME}' field in the Add Dependent popup
             IF    ('Name'in'${LABLE}' and '${NAME}'in'${LABLE}')  
                 ${ELEMENT_INPUT}=    Get From List    ${LIST_INPUT}   0
                 Clear Element Text    ${ELEMENT_INPUT}
+                Sleep    1s
                 Input text to ${ELEMENT_INPUT} with ${VALUE}
                 Exit For Loop
             ELSE IF    ('Date of Birth'in'${LABLE}'and '${NAME}'in'${LABLE}')  
                 ${ELEMENT_INPUT}=    Get From List    ${LIST_INPUT}   1
                 Clear Element Text    ${ELEMENT_INPUT}
+                Sleep    1s
                 Input text to ${ELEMENT_INPUT} with ${VALUE}
                 Exit For Loop
             ELSE IF    ('Tax Id No.'in'${LABLE}'and '${NAME}'in'${LABLE}')  
                 ${ELEMENT_INPUT}=    Get From List    ${LIST_INPUT}   2
                 Clear Element Text    ${ELEMENT_INPUT}
+                Sleep    1s
                 Click on the web element    ${ELEMENT_INPUT}
                 Input text to ${ELEMENT_INPUT} with ${VALUE}
                 Exit For Loop
