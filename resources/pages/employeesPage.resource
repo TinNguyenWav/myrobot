@@ -105,10 +105,10 @@ Select value for the Department field
     [Arguments]    ${option}
     TRY
         Click Element    ${ADDRESS_FIELD_ELE}
-        Sleep    1s
+        Wait Until Element Is Enabled    ${DEPARTMENT_FIELD_ELE}
         Click Element    ${DEPARTMENT_FIELD_ELE}
         Input text to ${DEPARTMENT_SEARCH_FIELD_ELE} with ${option}
-        Sleep    2s
+        Wait Until Element Is Enabled    ${DEPARTMENT_FIELD_ELE}
         Click Element    css=li[aria-label="${option}"]
         
     EXCEPT    
