@@ -81,66 +81,6 @@ Click on the Submit button
 Select an employee account
     ${employee_name}=    Get WebElement    css=tbody[class="p-element p-datatable-tbody"]>tr:first-child>td:nth-child(3)>a:nth-child(2)
     Click on the web element    ${employee_name}
-# Input value for the Employee ID field
-#     [Arguments]    ${value}
-#     Input text to ${EMPLOYEE_ID_FIELD_ELE} with ${value}
-Input value for the First Name field
-    [Arguments]    ${value}
-    Sleep    1s
-    Wait Until Element Is Enabled    ${FIRSTNAME_FIELD_ELE}
-    Input text to ${FIRSTNAME_FIELD_ELE} with ${value}
-Input value for the Last Name field
-    [Arguments]    ${value}
-    Wait Until Element Is Enabled    ${LASTNAME_FIELD_ELE}
-    Input text to ${LASTNAME_FIELD_ELE} with ${value}
-
-Input value for the Email field
-    [Arguments]    ${value}
-    Input text to ${EMAIL_FIELD_ELE} with ${value}
-Input value for the Joining Date field
-    ${value}=    Get current time
-    Input text to ${JOININGDATE_FIELD_ELE} with ${value}
-
-Select value for the Department field
-    [Arguments]    ${option}
-    TRY
-        Click Element    ${ADDRESS_FIELD_ELE}
-        Wait Until Element Is Enabled    ${DEPARTMENT_FIELD_ELE}
-        Click Element    ${DEPARTMENT_FIELD_ELE}
-        Input text to ${DEPARTMENT_SEARCH_FIELD_ELE} with ${option}
-        Wait Until Element Is Enabled    ${DEPARTMENT_FIELD_ELE}
-        Click Element    css=li[aria-label="${option}"]
-        
-    EXCEPT    
-        Run Keyword And Continue On Failure    Fail    Can not select the ${option} on the Contract Type dropdown field
-    END
-
-Select value for the Position field
-    [Arguments]    ${option}
-    TRY
-        Click Element    ${POSITION_FIELD_ELE}
-        Input text to ${POSITION_SEARCH_FIELD_ELE} with ${option}
-        Sleep    2s
-        Click Element    css=li[aria-label="${option}"]
-        
-    EXCEPT    
-        Run Keyword And Continue On Failure    Fail    Can not select the ${option} on the Contract Type dropdown field
-    END
-
-Select value for the Location field
-    [Arguments]    ${option}
-    TRY
-        Click Element    ${LOCATION_FIELD_ELE}
-        Input text to ${LOCATION_SEARCH_FIELD_ELE} with ${option}
-        Sleep    2s
-        Click Element    css=li[aria-label="${option}"]
-        
-    EXCEPT    
-        Run Keyword And Continue On Failure    Fail    Can not select the ${option} on the Contract Type dropdown field
-    END
-Select the Grant access to System checkbox
-    Click Element    css=check-box[id*="check-box-control_grantedAccess_0"]
-
 ### Behavior ###
 
 Access Employees page

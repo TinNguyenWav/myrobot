@@ -18,6 +18,8 @@ ${ERROR URL}            http://${SERVER}/error.html
 # User info
 ${ADMIN USER}           robot00058@wsvietnam.com
 ${ADMIN PASSWORD}       Robot@123456
+${ADMIN USER2}          tt1799917@gmail.com
+${ADMIN PASSWORD2}      @password123
 ${NORMAL USER}          robot00058@wsvietnam.com
 ${NORMAL PASSWORD}      Robot@123456
 
