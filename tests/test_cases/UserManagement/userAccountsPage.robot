@@ -27,7 +27,7 @@ GH-T75 --- Verify that Admin user can create user account by selecting checkbox 
     Select value for the Department field    ${DEPARTMENT}
     Select the Grant access to System checkbox
     Click on the Submit button
-    Access the User Account page
+    Access the User Accounts page
     Input value for Employee Email at User Accounts Page    ${EMAIL_EMPLOYEE}
     Click on the Search button
     The added user account should display on the User Accounts page    ${EMAIL_EMPLOYEE}
@@ -41,16 +41,27 @@ GH-T81 --- Verify that in edit mode, just show grant acess for profile has no Ac
 GH-T107 --- Verify that there is a page for managing all user accounts
     [Tags]    High
     Login system with admin user account second
-    Access the User Account page
+    Access the User Accounts page
     User Accounts page should be opened
 GH-T108 --- Verify that users can add a new User Account for existing employee profile
     [Tags]    High
     [Setup]    There is one employee who only has the employee account
-    Access the User Account page
+    Access the User Accounts page
     Click on the New User Account button
-    Input value for the Search Employee field
+    Input value for the Search Employee field    ${EMAIL_EMPLOYEE}
     Select the searched employee account
     Click on the Submit button of the Add User Account pop-up
     Input value for Employee Email at User Accounts Page    ${EMAIL_EMPLOYEE}
     Click on the Search button
     The added user account should display on the User Accounts page    ${EMAIL_EMPLOYEE}
+GH-T109 --- Verify that admin users can search employees by Name, Employee ID, Email
+    [Tags]    High
+    [Setup]    There is one employee who only has the employee account
+    Access the User Accounts page
+    Click on the New User Account button
+    Input value for the Search Employee field    ${EMAIL_EMPLOYEE}
+    The account should be displayed on the User Accounts page    ${EMAIL_EMPLOYEE}
+    Input value for the Search Employee field    Robot ${LAST_NAME}
+    The account should be displayed on the User Accounts page    Robot ${LAST_NAME}
+    Input value for the Search Employee field    ${EMPLOYEE_ID}
+    The account should be displayed on the User Accounts page    ${EMPLOYEE_ID}

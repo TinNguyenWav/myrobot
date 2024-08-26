@@ -50,8 +50,10 @@ Click on the New User Account button
     Wait Until Element Is Enabled    css=button[class*="add-btn"]>i[class="fa fa-plus"]
     Click Element    css=button[class*="add-btn"]>i[class="fa fa-plus"]
 Input value for the Search Employee field
+    [Arguments]    ${value}   
     Wait Until Element Is Enabled    css=input[role="searchbox"]
-    Input text to css=input[role="searchbox"] with ${EMAIL_EMPLOYEE}
+    Input text to css=input[role="searchbox"] with ${value}
+    
 Select the searched employee account
     Wait Until Element Is Enabled    css=ul[role="listbox"]
     Click Element    css=ul[role="listbox"]>li:first-child
@@ -63,7 +65,7 @@ Click on the Submit button of the Add User Account pop-up
     Wait Until Element Is Enabled    css=div[class="submit-section"]>button[class*="submit-btn"]
     Click Element    css=div[class="submit-section"]>button[class*="submit-btn"]
 # ------------------------BEHAVIOR--------------------------
-Access the User Account page
+Access the User Accounts page
     Go To    ${BASE_URL}${URL_USERACCOUNTS}
     Wait Until Location Contains    ${URL_USERACCOUNTS}
     User Accounts page should be opened
@@ -99,7 +101,7 @@ Create data
     Create Last Name
 Get email of email field on edit profile pop-up
     ${value}=    Get Text    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child>td:nth-child(4)
-    Access the User Account page
+    Access the User Accounts page
     Input value for Employee Email at User Accounts Page    ${value}
     Click on the Search button
     Wait Until Element Is Enabled    xpath=//tr[contains(@class,"table-row")]//td[4][contains(text(),"${value}")]
@@ -131,3 +133,15 @@ The system just should just show grant access for profile has no Account linked
     END
 There is one employee who only has the employee account
     Add an new employee account at Employees page
+
+The account should be displayed on the User Accounts page
+    [Arguments]    ${value}
+    Wait Until Element Is Enabled    css=ul[role="listbox"]
+    ${item_list}=    Get WebElements    css=ul[role="listbox"]>li
+    ${length}=    Get Length    ${item_list}
+    IF    ${length} == 1
+        Page Should Contain    ${value}
+        Element Should Contain    css=ul[role="listbox"]>li>div>div    ${value}
+    ELSE
+        Log    There is not any account match with information that provides
+    END

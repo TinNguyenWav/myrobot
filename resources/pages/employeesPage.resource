@@ -20,7 +20,7 @@ ${ADDRESS_FIELD_ELE}                  css=input-text[id*="text_currentResidentia
 ${LASTNAME_FIELD_ELE}                   css=input-text[id*="lastName_3"]>input
 ${EMAIL_FIELD_ELE}                      css=input-text[id*="email_6"]>input
 ${JOININGDATE_FIELD_ELE}                css=datetime-picker[id*="date-time_startDate_10"]>p-calendar>span>input
-${DEPARTMENT_FIELD_ELE}                 css=ng-select-item[id*="departmentId_12"]
+${DEPARTMENT_FIELD_ELE}                 css=ng-select-item[id*="departmentId_12"] div[role="button"]
 ${DEPARTMENT_SEARCH_FIELD_ELE}          css=input[class="p-dropdown-filter p-inputtext p-component"]
 ${POSITION_FIELD_ELE}                   css=ng-select-item[id*="positionId_11"]
 ${POSITION_SEARCH_FIELD_ELE}            css=input[class="p-dropdown-filter p-inputtext p-component"]
@@ -182,11 +182,18 @@ Select Department name
     [Arguments]    ${name}
     ${LOCATOR}=    Get Element by locator    ${DEPARTMENT_ID_LOCATOR}
     Select option in dropdown menu    ${LOCATOR}    ${name}
+Get Employee ID on Add New Employee pop-up
+    Wait Until Element Is Enabled    css=frontend-prefix-input[id="formly_22_prefix-input_fullCode_0"] input
+    ${EMPLOYEE_ID}=    Get Value    css=frontend-prefix-input[id="formly_22_prefix-input_fullCode_0"] input
+    ${EMPLOYEE_ID}=    Set Variable    ${EMPLOYEE_ID}
+    Set Global Variable    ${EMPLOYEE_ID}
+    RETURN    ${EMPLOYEE_ID}
 Add an new employee account at Employees page
     Login system with admin user account second
     Access Employees page
     Create data
     Click Add Employee button
+    Get Employee ID on Add New Employee pop-up
     Input value for the First Name field    Robot
     Input value for the Last Name field    ${LAST_NAME}
     Input value for the Email field    ${EMAIL_EMPLOYEE}
