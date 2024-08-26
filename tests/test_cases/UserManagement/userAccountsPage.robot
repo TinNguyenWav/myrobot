@@ -6,6 +6,10 @@ Resource            ../../../resources/keywords/zephyr_scale_integrate.resource
 Resource            ../../../resources/keywords/utils.resource
 Resource            ../../../resources/pages/loginPage.resource
 Resource            ../../../resources/pages/employeesPage.resource
+# Suite Setup         Test Suite Setup
+# Test Setup          Test case Setup
+# Test Teardown       Test case Teardown
+# Suite Teardown      Test Suite Teardown
 *** Variables ***
 *** Test Cases ***
 GH-T75 --- Verify that Admin user can create user account by selecting checkbox Grant access to System
@@ -39,3 +43,14 @@ GH-T107 --- Verify that there is a page for managing all user accounts
     Login system with admin user account second
     Access the User Account page
     User Accounts page should be opened
+GH-T108 --- Verify that users can add a new User Account for existing employee profile
+    [Tags]    High
+    [Setup]    There is one employee who only has the employee account
+    Access the User Account page
+    Click on the New User Account button
+    Input value for the Search Employee field
+    Select the searched employee account
+    Click on the Submit button of the Add User Account pop-up
+    Input value for Employee Email at User Accounts Page    ${EMAIL_EMPLOYEE}
+    Click on the Search button
+    The added user account should display on the User Accounts page    ${EMAIL_EMPLOYEE}

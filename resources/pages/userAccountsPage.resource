@@ -6,7 +6,7 @@ Resource    ./employeesPage.resource
 ${URL_USERACCOUNTS}    /app/user/accounts
 ${USERACCOUNT_PAGE_TITLE_ELEMENT}        css=h3[class="page-title"]
 ${EMPLOYEEEMALI_SEARCH_FIELD_ELE}         css=input-text[id*="input-text_email_2"]>input
-${SEARCHUSERACCOUNT_BTN_ELE}    css=form>div>button[type="submit"]>i[class="fa fa-search"]
+${SEARCHUSERACCOUNT_BTN_ELE}    css=button[type="submit"]>i[class="fa fa-search"]
 @{DEPARTMENT_LIST}=    Sale    Marketing    Customer Service    Quality Assurance/Control    Operations/Production    
 ...                    Information Technology (IT)    Finance and Accounting    Human Resources (HR)    Legal and Compliance
 ...                    Research and Development (R&D)
@@ -16,6 +16,8 @@ ${SEARCHUSERACCOUNT_BTN_ELE}    css=form>div>button[type="submit"]>i[class="fa f
 # ------------------------ACTION--------------------------
 Input value for Employee Email at User Accounts Page
     [Arguments]    ${value}
+    Page Should Contain Element    ${EMPLOYEEEMALI_SEARCH_FIELD_ELE}
+    Wait Until Element Is Enabled    ${EMPLOYEEEMALI_SEARCH_FIELD_ELE}
     Input text to ${EMPLOYEEEMALI_SEARCH_FIELD_ELE} with ${value}
 Click on the Search button
     Wait Until Element Is Enabled    ${SEARCHUSERACCOUNT_BTN_ELE}
@@ -44,6 +46,22 @@ Click on the Action menu of an employee account
 Select the Edit option on the Action menu of an employee account
     Wait Until Element Is Enabled    xpath=//ul[@role="menu"]//li[@role="menuitem"]//a[contains(text(),"Edit")]
     Click Element    xpath=//ul[@role="menu"]//li[@role="menuitem"]//a[contains(text(),"Edit")]
+Click on the New User Account button
+    Wait Until Element Is Enabled    css=button[class*="add-btn"]>i[class="fa fa-plus"]
+    Click Element    css=button[class*="add-btn"]>i[class="fa fa-plus"]
+Input value for the Search Employee field
+    Wait Until Element Is Enabled    css=input[role="searchbox"]
+    Input text to css=input[role="searchbox"] with ${EMAIL_EMPLOYEE}
+Select the searched employee account
+    Wait Until Element Is Enabled    css=ul[role="listbox"]
+    Click Element    css=ul[role="listbox"]>li:first-child
+Click on the Submit button of the Add User Account pop-up
+    # Wait Until Element Is Enabled    css=div[class="modal-body"]>div:nth-child(2)>div:nth-child(2)>div:nth-child(2)>p
+    # ${EMAIL_EMPLOYEE_ON_ADD_USER_ACCOUNT_POPUP}=    Get Text    css=div[class="modal-body"]>div:nth-child(2)>div:nth-child(2)>div:nth-child(2)>p
+    # Set Global Variable    ${EMAIL_EMPLOYEE_ON_ADD_USER_ACCOUNT_POPUP}
+    Sleep    5s
+    Wait Until Element Is Enabled    css=div[class="submit-section"]>button[class*="submit-btn"]
+    Click Element    css=div[class="submit-section"]>button[class*="submit-btn"]
 # ------------------------BEHAVIOR--------------------------
 Access the User Account page
     Go To    ${BASE_URL}${URL_USERACCOUNTS}
@@ -93,8 +111,6 @@ Get email of email field on edit profile pop-up
         #Employee had not user account
         RETURN    0
     END
-# Is the employee account that has user account
-    
 # ------------------------EXPECTED--------------------------
 User Accounts page should be opened
     ${current URL}=    Get Location
@@ -113,4 +129,5 @@ The system just should just show grant access for profile has no Account linked
     ELSE
         Page Should Contain Element    xpath=//lable[contains(text(),'Grant access to System with Company Email')]
     END
-    
+There is one employee who only has the employee account
+    Add an new employee account at Employees page

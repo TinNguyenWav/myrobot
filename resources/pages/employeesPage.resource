@@ -1,7 +1,8 @@
 *** Settings ***
 Resource    ../../configurations/config.resource
 Resource    ../pageObjects/multipleSelectPanel.resource
-
+Resource    ../keywords/common_test_steps.resource
+Resource    ../pages/userAccountsPage.resource
 Library    Process
 
 *** Variables ***
@@ -95,11 +96,13 @@ Input value for the Joining Date field
 Select value for the Department field
     [Arguments]    ${option}
     TRY
+        
+        Wait Until Element Is Enabled    ${ADDRESS_FIELD_ELE}
         Click Element    ${ADDRESS_FIELD_ELE}
         Wait Until Element Is Enabled    ${DEPARTMENT_FIELD_ELE}
         Click Element    ${DEPARTMENT_FIELD_ELE}
         Input text to ${DEPARTMENT_SEARCH_FIELD_ELE} with ${option}
-        Wait Until Element Is Enabled    ${DEPARTMENT_FIELD_ELE}
+        Wait Until Element Is Enabled    css=li[aria-label="${option}"]
         Click Element    css=li[aria-label="${option}"]
         
     EXCEPT    
@@ -179,3 +182,17 @@ Select Department name
     [Arguments]    ${name}
     ${LOCATOR}=    Get Element by locator    ${DEPARTMENT_ID_LOCATOR}
     Select option in dropdown menu    ${LOCATOR}    ${name}
+Add an new employee account at Employees page
+    Login system with admin user account second
+    Access Employees page
+    Create data
+    Click Add Employee button
+    Input value for the First Name field    Robot
+    Input value for the Last Name field    ${LAST_NAME}
+    Input value for the Email field    ${EMAIL_EMPLOYEE}
+    Select value for the Location field    Vietnam
+    Select value for the Position field    ${POSITION}
+    Input value for the Joining Date field
+    Select value for the Department field    ${DEPARTMENT}
+    Click on the Submit button
+    Wait Until Page Contains    Employee was created successfully
