@@ -23,6 +23,7 @@ Input value for Employee Email at User Accounts Page
 Click on the Search button
     Wait Until Element Is Enabled    ${SEARCHUSERACCOUNT_BTN_ELE}
     Click Element    ${SEARCHUSERACCOUNT_BTN_ELE}
+    Sleep    1s
 Click on the New User Account button
     Wait Until Element Is Enabled    css=button[class*="add-btn"]>i[class="fa fa-plus"]
     Click Element    css=button[class*="add-btn"]>i[class="fa fa-plus"]
@@ -65,6 +66,14 @@ Click on the Assign Roles button
 Click on the Submit button on the Edit User Account pop-up
     Wait Until Element Is Enabled    xpath=//button[contains(text(),'Submit')]
     Click Element    xpath=//button[contains(text(),'Submit')]
+Select a value on the User Status dropdown
+    Wait Until Element Is Enabled    css=ng-select-item[id*="_status_3"]
+    Click Element    css=ng-select-item[id*="_status_3"]
+    Wait Until Element Is Enabled    css=ul[role="listbox"] li[aria-label="Invited"]
+    Click Element    css=ul[role="listbox"] li[aria-label="Invited"]
+Select the Resend Invite option on the Action Menu of a user account
+    Wait Until Element Is Enabled    css=body>div.dropdown>div>button:nth-child(2)
+    Click Element    css=body>div.dropdown>div>button:nth-child(2)
 # ------------------------BEHAVIOR--------------------------
 Access the User Accounts page
     Go To    ${BASE_URL}${URL_USERACCOUNTS}
@@ -150,3 +159,7 @@ User should be edited success the user account
     Wait Until Element Is Enabled    css=div[class="toast-body"]
     Page Should Contain Element    css=div[class="toast-body"]
     Page Should Contain    Edit user account successfully
+The user should successfully select the Resend Invite
+    Sleep    1s
+    Wait Until Element Is Enabled    css=div[class="toast-body"]
+    Page Should Contain    Resend invite to user successfully

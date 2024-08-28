@@ -75,3 +75,12 @@ GH-T112 --- Verify that users can edit existing accounts by selecting the Edit o
     Click on the Assign Roles button
     Click on the Submit button on the Edit User Account pop-up
     User should be edited success the user account
+GH-T114 --- Verify that the user can successfully select the Resend Invite button
+    [Tags]    High
+    Login system with admin user account second
+    Access the User Accounts page
+    Select a value on the User Status dropdown
+    Click on the Search button
+    Click on the Action Menu of a user account
+    Select the Resend Invite option on the Action Menu of a user account
+    The user should successfully select the Resend Invite
