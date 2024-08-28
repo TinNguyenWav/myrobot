@@ -141,6 +141,31 @@ Click on the Submit button
 Select an employee account
     ${employee_name}=    Get WebElement    css=tbody[class="p-element p-datatable-tbody"]>tr:first-child>td:nth-child(3)>a:nth-child(2)
     Click on the web element    ${employee_name}
+Click on the Action menu of an employee account
+    Wait Until Element Is Enabled    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr
+    ${list_row}=    Get WebElements    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr
+    ${check_length}=    Get Length    ${list_row}
+    ${check}=    Get email of email field on edit profile pop-up
+    IF    ${check_length} > 0
+        IF    ${check} == 1
+            ${result}=    Evaluate    1
+            Set Global Variable    ${result} 
+        ELSE
+            ${result}=    Evaluate    0
+            Set Global Variable    ${result} 
+        END
+            Access Employees page
+            Wait Until Element Is Enabled    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child
+            Mouse Over    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child
+            Wait Until Element Is Enabled    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child>div>button>i[class="material-icons"]
+            Click Element    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child>div>button>i[class="material-icons"] 
+    ELSE
+        Fail    Log    Don't have any employee account to select
+    END
+Select the Edit option on the Action menu of an employee account
+    Wait Until Element Is Enabled    xpath=//ul[@role="menu"]//li[@role="menuitem"]//a[contains(text(),"Edit")]
+    Click Element    xpath=//ul[@role="menu"]//li[@role="menuitem"]//a[contains(text(),"Edit")]
+
 ### Behavior ###
 
 Access Employees page

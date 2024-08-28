@@ -12,6 +12,7 @@ ${SEARCHUSERACCOUNT_BTN_ELE}    css=button[type="submit"]>i[class="fa fa-search"
 ...                    Research and Development (R&D)
 @{POSITION_LIST}=      Product manager    President    Chief financial officer or controller (CFO)    Chief operating officer (COO)
 ...                    Executive    Accountant    Business analyst    Human resources manager    Product manager    President
+${SEARCH_INPUT_ROLE_NAME_USER_ACCOUNT_ELE}    css=div[class*="p-multiselect-filter-container"]>input
 *** Keywords ***
 # ------------------------ACTION--------------------------
 Input value for Employee Email at User Accounts Page
@@ -22,30 +23,6 @@ Input value for Employee Email at User Accounts Page
 Click on the Search button
     Wait Until Element Is Enabled    ${SEARCHUSERACCOUNT_BTN_ELE}
     Click Element    ${SEARCHUSERACCOUNT_BTN_ELE}
-Click on the Action menu of an employee account
-    Wait Until Element Is Enabled    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr
-    ${list_row}=    Get WebElements    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr
-    ${check_length}=    Get Length    ${list_row}
-    ${check}=    Get email of email field on edit profile pop-up
-    IF    ${check_length} > 0
-        IF    ${check} == 1
-            ${result}=    Evaluate    1
-            Set Global Variable    ${result} 
-        ELSE
-            ${result}=    Evaluate    0
-            Set Global Variable    ${result} 
-        END
-            Access Employees page
-            Wait Until Element Is Enabled    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child
-            Mouse Over    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child
-            Wait Until Element Is Enabled    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child>div>button>i[class="material-icons"]
-            Click Element    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child>div>button>i[class="material-icons"] 
-    ELSE
-        Fail    Log    Don't have any employee account to select
-    END
-Select the Edit option on the Action menu of an employee account
-    Wait Until Element Is Enabled    xpath=//ul[@role="menu"]//li[@role="menuitem"]//a[contains(text(),"Edit")]
-    Click Element    xpath=//ul[@role="menu"]//li[@role="menuitem"]//a[contains(text(),"Edit")]
 Click on the New User Account button
     Wait Until Element Is Enabled    css=button[class*="add-btn"]>i[class="fa fa-plus"]
     Click Element    css=button[class*="add-btn"]>i[class="fa fa-plus"]
@@ -58,12 +35,36 @@ Select the searched employee account
     Wait Until Element Is Enabled    css=ul[role="listbox"]
     Click Element    css=ul[role="listbox"]>li:first-child
 Click on the Submit button of the Add User Account pop-up
-    # Wait Until Element Is Enabled    css=div[class="modal-body"]>div:nth-child(2)>div:nth-child(2)>div:nth-child(2)>p
-    # ${EMAIL_EMPLOYEE_ON_ADD_USER_ACCOUNT_POPUP}=    Get Text    css=div[class="modal-body"]>div:nth-child(2)>div:nth-child(2)>div:nth-child(2)>p
-    # Set Global Variable    ${EMAIL_EMPLOYEE_ON_ADD_USER_ACCOUNT_POPUP}
     Sleep    5s
     Wait Until Element Is Enabled    css=div[class="submit-section"]>button[class*="submit-btn"]
     Click Element    css=div[class="submit-section"]>button[class*="submit-btn"]
+Click on the Action Menu of a user account
+    ${user_accounts_list}=    Get WebElements    css=tbody[class*="p-datatable-tbody"]>tr
+    ${user_accounts_list_length}=    Get Length    ${user_accounts_list}
+    IF    ${user_accounts_list_length} > 0
+        Wait Until Element Is Enabled    css=tbody>tr:first-child>td:nth-child(7) i[class="dropdown-toggle material-icons"]
+        Click Element    css=tbody>tr:first-child>td:nth-child(7) i[class="dropdown-toggle material-icons"]
+        
+    ELSE
+        Log    There are not any user accounts at User Accounts page         
+    END
+Select the Edit option on the Action Menu of a user account
+    Wait Until Element Is Enabled    css=body>div.dropdown>div>button:nth-child(1)
+    Click Element    css=body>div.dropdown>div>button:nth-child(1)
+Select a value on the Role dropdown
+    Wait Until Element Is Enabled    css=div[class="modal-body"] chevrondownicon
+    Click Element    css=div[class="modal-body"] chevrondownicon
+    Wait Until Element Is Enabled    ${SEARCH_INPUT_ROLE_NAME_USER_ACCOUNT_ELE}
+    Sleep    1s
+    Input text to ${SEARCH_INPUT_ROLE_NAME_USER_ACCOUNT_ELE} with Test Role
+    Wait Until Element Is Enabled    css=ul[role="listbox"]>p-multiselectitem>li[aria-label="Test Role"]
+    Click Element    css=ul[role="listbox"]>p-multiselectitem>li[aria-label="Test Role"]
+Click on the Assign Roles button
+    Wait Until Element Is Enabled    xpath=//button[contains(text(),'Assign Roles')]
+    Click Element    xpath=//button[contains(text(),'Assign Roles')]
+Click on the Submit button on the Edit User Account pop-up
+    Wait Until Element Is Enabled    xpath=//button[contains(text(),'Submit')]
+    Click Element    xpath=//button[contains(text(),'Submit')]
 # ------------------------BEHAVIOR--------------------------
 Access the User Accounts page
     Go To    ${BASE_URL}${URL_USERACCOUNTS}
@@ -145,3 +146,7 @@ The account should be displayed on the User Accounts page
     ELSE
         Log    There is not any account match with information that provides
     END
+User should be edited success the user account
+    Wait Until Element Is Enabled    css=div[class="toast-body"]
+    Page Should Contain Element    css=div[class="toast-body"]
+    Page Should Contain    Edit user account successfully

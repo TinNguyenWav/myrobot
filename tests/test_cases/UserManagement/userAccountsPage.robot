@@ -65,3 +65,13 @@ GH-T109 --- Verify that admin users can search employees by Name, Employee ID, E
     The account should be displayed on the User Accounts page    Robot ${LAST_NAME}
     Input value for the Search Employee field    ${EMPLOYEE_ID}
     The account should be displayed on the User Accounts page    ${EMPLOYEE_ID}
+GH-T112 --- Verify that users can edit existing accounts by selecting the Edit option on the Action menu
+    [Tags]    High
+    Login system with admin user account second
+    Access the User Accounts page
+    Click on the Action Menu of a user account
+    Select the Edit option on the Action Menu of a user account
+    Select a value on the Role dropdown
+    Click on the Assign Roles button
+    Click on the Submit button on the Edit User Account pop-up
+    User should be edited success the user account
