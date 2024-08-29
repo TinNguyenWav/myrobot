@@ -79,8 +79,17 @@ GH-T114 --- Verify that the user can successfully select the Resend Invite butto
     [Tags]    High
     Login system with admin user account second
     Access the User Accounts page
-    Select a value on the User Status dropdown
+    Select a value on the User Status dropdown    Resend Invite    
     Click on the Search button
     Click on the Action Menu of a user account
     Select the Resend Invite option on the Action Menu of a user account
     The user should successfully select the Resend Invite
+GH-T115 --- Verify that admin user can select Restore access when current status is Suspended
+    [Tags]    High
+    [Setup]    There is a user account that has Suspended status
+    Access the User Accounts page
+    Select a value on the User Status dropdown    Suspended
+    Click on the Search button
+    Click on the Action Menu of a user account
+    Select the Restore Access option on the Action Menu of a user account
+    The user should successfully select the Restore Invite
