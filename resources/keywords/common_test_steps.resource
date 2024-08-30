@@ -10,6 +10,10 @@ Login system with admin user account
     Open Login page
     Login with username and password    ${ADMIN USER}    ${ADMIN PASSWORD}
     Wait Until Location Does Not Contain    login
+Login system with admin user account second
+    Open Login page
+    Login with username and password    ${ADMIN USER2}    ${ADMIN PASSWORD2}
+    Wait Until Location Does Not Contain    login
 
 Test Suite Setup
     Create test cycle at folder    Smoke Testing
