@@ -1,6 +1,7 @@
 *** Settings ***
 Resource    ../../configurations/config.resource
 Resource    ../keywords/command.resource
+Library    XML
 Resource    ./employeesPage.resource
 *** Variables ***
 ${URL_USERACCOUNTS}    /app/user/accounts
@@ -13,6 +14,25 @@ ${SEARCHUSERACCOUNT_BTN_ELE}    css=button[type="submit"]>i[class="fa fa-search"
 @{POSITION_LIST}=      Product manager    President    Chief financial officer or controller (CFO)    Chief operating officer (COO)
 ...                    Executive    Accountant    Business analyst    Human resources manager    Product manager    President
 ${SEARCH_INPUT_ROLE_NAME_USER_ACCOUNT_ELE}    css=div[class*="p-multiselect-filter-container"]>input
+${MESSAGE_ELE}         css=div[class="toast-body"]
+${NEW_USER_ACCOUNT_BTN_ELE}         css=button[class*="add-btn"]>i[class="fa fa-plus"]
+${SEARCH_EMPLOYEE_UA_ELE}         css=input[role="searchbox"]
+${SEARCH_LIST_ELE}         css=ul[role="listbox"]
+${SEARCH_FIRST_ITEM_ELE}         css=ul[role="listbox"]>li:first-child
+${SUBMIT_BTN_ADD_USER_POPUP_ELE}         css=div[class="submit-section"]>button[class*="submit-btn"]
+${ACCOUNTS_USER_TABLE_ELE}         css=tbody[class*="p-datatable-tbody"]>tr
+${ACTION_MENU_ICON_ELE}         css=tbody>tr:first-child>td:nth-child(7) i[class="dropdown-toggle material-icons"]
+${EDIT_OPTION_USER_ACCOUNT_ELE}    css=body>div.dropdown>div>button:nth-child(1)
+${OPTION_OF_ROLE_ELE}    css=ul[role="listbox"]>p-multiselectitem>li[aria-label="Test Role"]
+${ASSIGN_ROLE_BTN_ELE}    xpath=//button[contains(text(),'Assign Roles')]
+${SUBMIT_BTN_EDIT_USER_ACCOUNT_ELE}    xpath=//button[contains(text(),'Submit')]
+${USER_STATUS_DROPDOWN_ELE}    css=ng-select-item[id*="_status_3"]
+${OPTION_OF_ACTIONMENU_USER_ACCOUNT_ELE}    css=body>div.dropdown>div>button:nth-child(2)
+${EMAILVALUE_EDIT_PROFILE_ELE}    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child>td:nth-child(4)
+${GRANT_ACCESS_FOR_PROFILE_TITLE_ELE}    xpath=//lable[contains(text(),'Grant access to System with Company Email')]
+
+
+
 *** Keywords ***
 # ------------------------ACTION--------------------------
 Input value for Employee Email at User Accounts Page
@@ -25,63 +45,62 @@ Click on the Search button
     Click Element    ${SEARCHUSERACCOUNT_BTN_ELE}
     Sleep    1s
 Click on the New User Account button
-    Wait Until Element Is Enabled    css=button[class*="add-btn"]>i[class="fa fa-plus"]
-    Click Element    css=button[class*="add-btn"]>i[class="fa fa-plus"]
+    Wait Until Element Is Enabled    ${NEW_USER_ACCOUNT_BTN_ELE}
+    Click Element    ${NEW_USER_ACCOUNT_BTN_ELE}
 Input value for the Search Employee field
     [Arguments]    ${value}   
-    Wait Until Element Is Enabled    css=input[role="searchbox"]
-    Input text to css=input[role="searchbox"] with ${value}
+    Wait Until Element Is Enabled    ${SEARCH_EMPLOYEE_UA_ELE}
+    Input text to ${SEARCH_EMPLOYEE_UA_ELE} with ${value}
     
 Select the searched employee account
-    Wait Until Element Is Enabled    css=ul[role="listbox"]
-    Click Element    css=ul[role="listbox"]>li:first-child
+    Wait Until Element Is Enabled    ${SEARCH_LIST_ELE}
+    Click Element    ${SEARCH_FIRST_ITEM_ELE}
 Click on the Submit button of the Add User Account pop-up
     Sleep    5s
-    Wait Until Element Is Enabled    css=div[class="submit-section"]>button[class*="submit-btn"]
-    Click Element    css=div[class="submit-section"]>button[class*="submit-btn"]
+    Wait Until Element Is Enabled    ${SUBMIT_BTN_ADD_USER_POPUP_ELE}
+    Click Element    ${SUBMIT_BTN_ADD_USER_POPUP_ELE}
 Click on the Action Menu of a user account
-    ${user_accounts_list}=    Get WebElements    css=tbody[class*="p-datatable-tbody"]>tr
+    ${user_accounts_list}=    Get WebElements    ${ACCOUNTS_USER_TABLE_ELE}
     ${user_accounts_list_length}=    Get Length    ${user_accounts_list}
     IF    ${user_accounts_list_length} > 0
-            Wait Until Element Is Enabled    css=tbody>tr:first-child>td:nth-child(7) i[class="dropdown-toggle material-icons"]
-            Click Element    css=tbody>tr:first-child>td:nth-child(7) i[class="dropdown-toggle material-icons"]
+            Wait Until Element Is Enabled    ${ACTION_MENU_ICON_ELE}
+            Click Element    ${ACTION_MENU_ICON_ELE}
         
     ELSE
         Log    There are not any user accounts at User Accounts page         
     END
 Select the Edit option on the Action Menu of a user account
-    Wait Until Element Is Enabled    css=body>div.dropdown>div>button:nth-child(1)
-    Click Element    css=body>div.dropdown>div>button:nth-child(1)
+    Wait Until Element Is Enabled    ${EDIT_OPTION_USER_ACCOUNT_ELE}
+    Click Element    ${EDIT_OPTION_USER_ACCOUNT_ELE}
 Select a value on the Role dropdown
     Wait Until Element Is Enabled    css=div[class="modal-body"] chevrondownicon
     Click Element    css=div[class="modal-body"] chevrondownicon
     Wait Until Element Is Enabled    ${SEARCH_INPUT_ROLE_NAME_USER_ACCOUNT_ELE}
     Sleep    1s
     Input text to ${SEARCH_INPUT_ROLE_NAME_USER_ACCOUNT_ELE} with Test Role
-    Wait Until Element Is Enabled    css=ul[role="listbox"]>p-multiselectitem>li[aria-label="Test Role"]
-    Click Element    css=ul[role="listbox"]>p-multiselectitem>li[aria-label="Test Role"]
+    Wait Until Element Is Enabled    ${OPTION_OF_ROLE_ELE}
+    Click Element    ${OPTION_OF_ROLE_ELE}
 Click on the Assign Roles button
-    Wait Until Element Is Enabled    xpath=//button[contains(text(),'Assign Roles')]
-    Click Element    xpath=//button[contains(text(),'Assign Roles')]
+    Wait Until Element Is Enabled    ${ASSIGN_ROLE_BTN_ELE}
+    Click Element    ${ASSIGN_ROLE_BTN_ELE}
 Click on the Submit button on the Edit User Account pop-up
-    Wait Until Element Is Enabled    xpath=//button[contains(text(),'Submit')]
-    Click Element    xpath=//button[contains(text(),'Submit')]
+    Wait Until Element Is Enabled    ${SUBMIT_BTN_EDIT_USER_ACCOUNT_ELE}
+    Click Element    ${SUBMIT_BTN_EDIT_USER_ACCOUNT_ELE}
 Select a value on the User Status dropdown
     [Arguments]    ${option_value}
-    Wait Until Element Is Enabled    css=ng-select-item[id*="_status_3"]
-    Click Element    css=ng-select-item[id*="_status_3"]
+    Wait Until Element Is Enabled    ${USER_STATUS_DROPDOWN_ELE}
+    Click Element    ${USER_STATUS_DROPDOWN_ELE}
     Wait Until Element Is Enabled    css=ul[role="listbox"] li[aria-label="${option_value}"]
     Click Element    css=ul[role="listbox"] li[aria-label="${option_value}"]
 Select the Resend Invite option on the Action Menu of a user account
-    Wait Until Element Is Enabled    css=body>div.dropdown>div>button:first-child
-    Click Element    css=body>div.dropdown>div>button:first-child
+    Wait Until Element Is Enabled    ${OPTION_OF_ACTIONMENU_USER_ACCOUNT_ELE}
+    Click Element    ${OPTION_OF_ACTIONMENU_USER_ACCOUNT_ELE}
 Select the Restore Access option on the Action Menu of a user account
-    Wait Until Element Is Enabled    css=body>div.dropdown>div>button:nth-child(2)
-    Click Element    css=body>div.dropdown>div>button:nth-child(2)
+    Wait Until Element Is Enabled    ${OPTION_OF_ACTIONMENU_USER_ACCOUNT_ELE}
+    Click Element    ${OPTION_OF_ACTIONMENU_USER_ACCOUNT_ELE}
 Select the Suspend Access option on the Action Menu of a user account
-    Wait Until Element Is Enabled    css=body>div.dropdown>div>button:nth-child(2)
-    Click Element    css=body>div.dropdown>div>button:nth-child(2)
-
+    Wait Until Element Is Enabled    ${OPTION_OF_ACTIONMENU_USER_ACCOUNT_ELE}
+    Click Element    ${OPTION_OF_ACTIONMENU_USER_ACCOUNT_ELE}
 # ------------------------BEHAVIOR--------------------------
 Access the User Accounts page
     Go To    ${BASE_URL}${URL_USERACCOUNTS}
@@ -118,7 +137,7 @@ Create data
     Create Position option
     Create Last Name
 Get email of email field on edit profile pop-up
-    ${value}=    Get Text    css=table[id="pn_id_1-table"]>tbody[class="p-element p-datatable-tbody"]>tr:first-child>td:nth-child(4)
+    ${value}=    Get Text    ${EMAILVALUE_EDIT_PROFILE_ELE}
     Access the User Accounts page
     Input value for Employee Email at User Accounts Page    ${value}
     Click on the Search button
@@ -139,7 +158,6 @@ There is a user account that has Suspended status
     Click on the Action Menu of a user account
     Select the Suspend Access option on the Action Menu of a user account
     The user should successfully select the Suspend Access
-
 # ------------------------EXPECTED--------------------------
 User Accounts page should be opened
     ${current URL}=    Get Location
@@ -154,16 +172,16 @@ The added user account should display on the User Accounts page
     
 The system just should just show grant access for profile has no Account linked
     IF    ${result} == 1
-        Page Should Not Contain Element    xpath=//lable[contains(text(),'Grant access to System with Company Email')]
+        Page Should Not Contain Element    ${GRANT_ACCESS_FOR_PROFILE_TITLE_ELE}
     ELSE
-        Page Should Contain Element    xpath=//lable[contains(text(),'Grant access to System with Company Email')]
+        Page Should Contain Element    ${GRANT_ACCESS_FOR_PROFILE_TITLE_ELE}
     END
 There is one employee who only has the employee account
     Add an new employee account at Employees page
 
 The account should be displayed on the User Accounts page
     [Arguments]    ${value}
-    Wait Until Element Is Enabled    css=ul[role="listbox"]
+    Wait Until Element Is Enabled    ${SEARCH_LIST_ELE}
     ${item_list}=    Get WebElements    css=ul[role="listbox"]>li
     ${length}=    Get Length    ${item_list}
     IF    ${length} == 1
@@ -173,18 +191,19 @@ The account should be displayed on the User Accounts page
         Log    There is not any account match with information that provides
     END
 User should be edited success the user account
-    Wait Until Element Is Enabled    css=div[class="toast-body"]
-    Page Should Contain Element    css=div[class="toast-body"]
+    Wait Until Element Is Enabled    ${MESSAGE_ELE}
+    Page Should Contain Element    ${MESSAGE_ELE}
     Page Should Contain    Edit user account successfully
 The user should successfully select the Resend Invite
     Sleep    1s
-    Wait Until Element Is Enabled    css=div[class="toast-body"]
+    Wait Until Element Is Enabled    ${MESSAGE_ELE}
     Page Should Contain    Resend invite to user successfully
 The user should successfully select the Restore Invite
+    Wait Until Element Is Enabled    ${MESSAGE_ELE}
     Sleep    1s
-    Wait Until Element Is Enabled    css=div[class="toast-body"]
     Page Should Contain    Restore access user account successfully
 The user should successfully select the Suspend Access
-    Wait Until Element Is Enabled    css=div[class="toast-body"]
+    Wait Until Element Is Enabled    ${MESSAGE_ELE}
     Sleep    1s
     Page Should Contain    Suspend user account successfully
+    

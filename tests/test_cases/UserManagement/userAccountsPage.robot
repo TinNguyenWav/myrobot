@@ -8,7 +8,7 @@ Resource            ../../../resources/pages/loginPage.resource
 Resource            ../../../resources/pages/employeesPage.resource
 # Suite Setup         Test Suite Setup
 # Test Setup          Test case Setup
-# Test Teardown       Test case Teardown
+Test Teardown       Close Browser 
 # Suite Teardown      Test Suite Teardown
 *** Variables ***
 *** Test Cases ***
@@ -79,7 +79,7 @@ GH-T114 --- Verify that the user can successfully select the Resend Invite butto
     [Tags]    High
     Login system with admin user account second
     Access the User Accounts page
-    Select a value on the User Status dropdown    Resend Invite    
+    Select a value on the User Status dropdown    Invited
     Click on the Search button
     Click on the Action Menu of a user account
     Select the Resend Invite option on the Action Menu of a user account
